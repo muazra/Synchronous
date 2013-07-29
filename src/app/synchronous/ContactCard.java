@@ -6,6 +6,7 @@ package app.synchronous;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class ContactCard extends Activity {
 
@@ -13,6 +14,8 @@ public class ContactCard extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_card);
+
+
 	}
 
 	@Override
@@ -21,5 +24,18 @@ public class ContactCard extends Activity {
 		getMenuInflater().inflate(R.menu.contact_card, menu);
 		return true;
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch(item.getItemId()) {
+		case R.id.toggleButton:	
+			item.setIcon(R.drawable.on);
+			item.setTitle("Toggle Sharing");
+			break;
+		}
+		return true;
+	}
+
 
 }
