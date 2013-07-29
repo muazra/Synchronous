@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 // Muaz Rahman
+=======
+// Muaz Rahman & Muntaser Ahmed
+>>>>>>> 5b04b19503f6f36af369f2e533bfd5a6688d8912
 // Birthday: 29 July 2013
-// go go now
+
 
 package app.synchronous;
 
