@@ -30,8 +30,18 @@ public class ContactCard extends Activity {
 		super.onOptionsItemSelected(item);
 		switch(item.getItemId()) {
 		case R.id.toggleButton:	
-			item.setIcon(R.drawable.on);
 			item.setTitle("Toggle Sharing");
+
+			int clickNumber = 0;
+			clickNumber++;
+			if ( (clickNumber % 2) == 1) { 
+				item.setIcon(R.drawable.on);
+			}
+			if ( (clickNumber % 2) == 0) { 
+				item.setIcon(R.drawable.off);
+			}
+
+			item.setIcon(R.drawable.on);
 			break;
 		}
 		return true;
