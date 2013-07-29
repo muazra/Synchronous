@@ -22,9 +22,15 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int off=0x7f020001;
+        public static final int on=0x7f020002;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;
+<<<<<<< HEAD
+=======
+        public static final int toggleButton=0x7f080001;
+>>>>>>> 1bbf17d75135cd0e963a2208c07e1c0c92631b6c
     }
     public static final class layout {
         public static final int activity_contact_card=0x7f030000;
