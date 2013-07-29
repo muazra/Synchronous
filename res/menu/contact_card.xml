@@ -7,6 +7,12 @@
         android:title="@string/action_settings"/>
     
     <item
+        android:id="@+id/editButton"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:title="Edit"/>
+    
+    <item
         android:id="@+id/toggleButton"
         android:icon="@drawable/off"
         android:orderInCategory="3"
