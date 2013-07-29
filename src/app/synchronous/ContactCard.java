@@ -1,3 +1,6 @@
+// Muaz Rahman & Muntaser Ahmed
+// Birthday: 29 July 2013
+
 package app.synchronous;
 
 import android.os.Bundle;
