@@ -27,10 +27,7 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080000;
-<<<<<<< HEAD
-=======
         public static final int toggleButton=0x7f080001;
->>>>>>> 1bbf17d75135cd0e963a2208c07e1c0c92631b6c
     }
     public static final class layout {
         public static final int activity_contact_card=0x7f030000;
