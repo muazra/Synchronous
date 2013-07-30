@@ -61,10 +61,6 @@ public class ContactCard extends Activity {
 				Toast.makeText(getApplicationContext(), "Sharing Off", Toast.LENGTH_SHORT).show();
 			}
 			break;
-			
-		case R.id.proximity_setting:
-			showProximityDialog();
-			break;
 		
 		case R.id.feedback_setting:
 			Intent feedbackIntent = new Intent(this, FeedbackActivity.class);
@@ -75,32 +71,8 @@ public class ContactCard extends Activity {
 			Intent helpIntent = new Intent(this, HelpActivity.class);
 			startActivity(helpIntent);
 			break;
-			
 		}
 		return true;
-	}
-	
-	/*
-	 * Radio Button Dialog Method
-	 */
-	
-	private void showProximityDialog() {
-		
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-		dialogBuilder.setTitle("Proximity");
-		final String[] proximities = {"Close", "Nearby", "Far"};
-		dialogBuilder.setSingleChoiceItems(proximities, proximityChoice, new DialogInterface.OnClickListener() {
-			
-			public void onClick(DialogInterface dialog, int which) {
-				proximityChoice = which;
-				dialog.dismiss();
-			}
-		});
-		
-		AlertDialog alertDialog = dialogBuilder.create();
-		alertDialog.show();
-		
-		
 	}
 
 
