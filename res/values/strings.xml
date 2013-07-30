@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Synchronous</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="proximity_settings">Proximity</string>
+    <string name="feedback_settings">Feedback</string>
+    <string name="help_settings">Help</string>
 
 </resources>
