@@ -42,11 +42,11 @@ public class ContactCard extends Activity {
 			clickCount++;
 
 			if ( (clickCount % 2) == 1) {
-				item.setIcon(R.drawable.on);
+				item.setIcon(R.drawable.worldon);
 				Toast.makeText(getApplicationContext(), "Sharing On", Toast.LENGTH_SHORT).show();
 			}
 			else {
-				item.setIcon(R.drawable.off);
+				item.setIcon(R.drawable.worldoff);
 				Toast.makeText(getApplicationContext(), "Sharing Off", Toast.LENGTH_SHORT).show();
 			}
 			break;

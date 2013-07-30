@@ -14,7 +14,7 @@
     
     <item
         android:id="@+id/toggleButton"
-        android:icon="@drawable/off"
+        android:icon="@drawable/worldoff"
         android:orderInCategory="3"
         android:showAsAction="ifRoom"/>
 
