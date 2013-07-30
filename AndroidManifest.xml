@@ -30,6 +30,10 @@
             android:name="app.synchronous.HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
+        <activity
+            android:name="app.synchronous.EditActivity"
+            android:label="@string/title_activity_edit" >
+        </activity>
     </application>
 
 </manifest>

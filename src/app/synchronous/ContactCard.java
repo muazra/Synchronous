@@ -34,6 +34,12 @@ public class ContactCard extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch(item.getItemId()) {
+		
+		case R.id.editButton:
+			Intent editIntent = new Intent(this, EditActivity.class);
+			startActivity(editIntent);
+			break;
+		
 		case R.id.toggleButton:	
 			
 			item.setTitle("Toggle Sharing");
@@ -57,7 +63,6 @@ public class ContactCard extends Activity {
 			
 		case R.id.proximity_setting:
 			showProximityDialog();
-			
 			break;
 		
 		case R.id.feedback_setting:
@@ -75,7 +80,7 @@ public class ContactCard extends Activity {
 	}
 	
 	/*
-	 * Radio button selection in dialog
+	 * Radio Button Dialog Method
 	 */
 	
 	private void showProximityDialog() {
@@ -87,7 +92,7 @@ public class ContactCard extends Activity {
 			
 			public void onClick(DialogInterface dialog, int which) {
 				proximityChoice = which;
-				
+				dialog.dismiss();
 			}
 		});
 		

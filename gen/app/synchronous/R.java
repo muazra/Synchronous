@@ -34,13 +34,15 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_contact_card=0x7f030000;
-        public static final int activity_feedback=0x7f030001;
-        public static final int activity_help=0x7f030002;
+        public static final int activity_edit=0x7f030001;
+        public static final int activity_feedback=0x7f030002;
+        public static final int activity_help=0x7f030003;
     }
     public static final class menu {
         public static final int contact_card=0x7f070000;
-        public static final int feedback=0x7f070001;
-        public static final int help=0x7f070002;
+        public static final int edit=0x7f070001;
+        public static final int feedback=0x7f070002;
+        public static final int help=0x7f070003;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
@@ -48,6 +50,7 @@ public final class R {
         public static final int feedback_settings=0x7f050002;
         public static final int help_settings=0x7f050003;
         public static final int proximity_settings=0x7f050001;
+        public static final int title_activity_edit=0x7f050007;
         public static final int title_activity_feedback=0x7f050005;
         public static final int title_activity_help=0x7f050006;
     }
