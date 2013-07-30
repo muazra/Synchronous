@@ -22,7 +22,7 @@
         android:id="@+id/editButton"
         android:orderInCategory="1"
         android:showAsAction="ifRoom"
-        android:title="Edit"/>
+        android:title="@string/edit"/>
     
     <item
         android:id="@+id/toggleButton"

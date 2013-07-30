@@ -5,5 +5,10 @@
     <string name="proximity_settings">Proximity</string>
     <string name="feedback_settings">Feedback</string>
     <string name="help_settings">Help</string>
+    <string name="edit">Edit</string>
+    
+    <string name="title_activity_feedback">Feedback</string>
+    
+    <string name="title_activity_help">Help</string>
 
 </resources>

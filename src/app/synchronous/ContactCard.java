@@ -5,6 +5,7 @@ package app.synchronous;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -50,6 +51,17 @@ public class ContactCard extends Activity {
 				Toast.makeText(getApplicationContext(), "Sharing Off", Toast.LENGTH_SHORT).show();
 			}
 			break;
+		
+		case R.id.feedback_setting:
+			Intent feedbackIntent = new Intent(this, FeedbackActivity.class);
+			startActivity(feedbackIntent);
+			break;
+			
+		case R.id.help_setting:
+			Intent helpIntent = new Intent(this, HelpActivity.class);
+			startActivity(helpIntent);
+			break;
+			
 		}
 		return true;
 	}
