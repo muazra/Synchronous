@@ -50,9 +50,10 @@ public final class R {
         public static final int feedback_settings=0x7f050002;
         public static final int help_settings=0x7f050003;
         public static final int proximity_settings=0x7f050001;
-        public static final int title_activity_edit=0x7f050007;
-        public static final int title_activity_feedback=0x7f050005;
-        public static final int title_activity_help=0x7f050006;
+        public static final int title_activity_contact_card=0x7f050005;
+        public static final int title_activity_edit=0x7f050008;
+        public static final int title_activity_feedback=0x7f050006;
+        public static final int title_activity_help=0x7f050007;
     }
     public static final class style {
         /** 
