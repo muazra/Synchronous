@@ -5,6 +5,8 @@ package app.synchronous;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 public class ContactCard extends Activity {
 
 	int clickCount = 0;
+	int proximityChoice = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,11 @@ public class ContactCard extends Activity {
 				Toast.makeText(getApplicationContext(), "Sharing Off", Toast.LENGTH_SHORT).show();
 			}
 			break;
+			
+		case R.id.proximity_setting:
+			showProximityDialog();
+			
+			break;
 		
 		case R.id.feedback_setting:
 			Intent feedbackIntent = new Intent(this, FeedbackActivity.class);
@@ -64,6 +72,29 @@ public class ContactCard extends Activity {
 			
 		}
 		return true;
+	}
+	
+	/*
+	 * Radio button selection in dialog
+	 */
+	
+	private void showProximityDialog() {
+		
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setTitle("Proximity");
+		final String[] proximities = {"Close", "Nearby", "Far"};
+		dialogBuilder.setSingleChoiceItems(proximities, proximityChoice, new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				proximityChoice = which;
+				
+			}
+		});
+		
+		AlertDialog alertDialog = dialogBuilder.create();
+		alertDialog.show();
+		
+		
 	}
 
 
