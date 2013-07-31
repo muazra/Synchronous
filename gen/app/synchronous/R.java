@@ -21,9 +21,11 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int worldoff=0x7f020001;
-        public static final int worldon=0x7f020002;
+        public static final int drawer_shadow=0x7f020000;
+        public static final int ic_drawer=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int worldoff=0x7f020003;
+        public static final int worldon=0x7f020004;
     }
     public static final class id {
         public static final int card_content=0x7f080002;
@@ -40,6 +42,7 @@ public final class R {
         public static final int activity_edit=0x7f030001;
         public static final int activity_feedback=0x7f030002;
         public static final int activity_help=0x7f030003;
+        public static final int drawer_list_item=0x7f030004;
     }
     public static final class menu {
         public static final int contact_card=0x7f070000;
