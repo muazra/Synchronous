@@ -25,15 +25,18 @@
         </activity>
         <activity
             android:name="app.synchronous.FeedbackActivity"
-            android:label="@string/title_activity_feedback" >
+            android:label="@string/title_activity_feedback"
+            android:parentActivityName="app.synchronous.ContactCard" >
         </activity>
         <activity
             android:name="app.synchronous.HelpActivity"
-            android:label="@string/title_activity_help" >
+            android:label="@string/title_activity_help"
+            android:parentActivityName="app.synchronous.ContactCard" >
         </activity>
         <activity
             android:name="app.synchronous.EditActivity"
-            android:label="@string/title_activity_edit" >
+            android:label="@string/title_activity_edit"
+            android:parentActivityName="app.synchronous.ContactCard" >
         </activity>
     </application>
 

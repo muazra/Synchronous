@@ -45,11 +45,12 @@ public class ContactCard extends Activity {
 		 * NAVIGATION DRAWER
 		 */
 
-		myDrawerTitle = "Available";
+		myDrawerTitle = "Contacts";
 		myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		myDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		myDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+		
+		
 		myDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, people));
 		myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
