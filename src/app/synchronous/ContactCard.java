@@ -8,7 +8,6 @@ package app.synchronous;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -26,8 +25,7 @@ public class ContactCard extends Activity {
 
 	private DrawerLayout myDrawerLayout;
 	private ListView myDrawerList;
-    private ActionBarDrawerToggle myDrawerToggle;
-
+	private ActionBarDrawerToggle myDrawerToggle;
 
 	private String barTitle = "";
 	private String myDrawerTitle = "";
@@ -40,7 +38,7 @@ public class ContactCard extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_card);
-		
+
 		barTitle = (String) getTitle();
 
 		/**
@@ -50,12 +48,10 @@ public class ContactCard extends Activity {
 		myDrawerTitle = "Available";
 		myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		myDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        myDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+		myDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 		myDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, people));
-        myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+		myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// Action Bar icon toggles Drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,8 +63,8 @@ public class ContactCard extends Activity {
 				this,                  /* host Activity */
 				myDrawerLayout,         /* DrawerLayout object */
 				R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-				0,  /* USED 0 "open drawer" description for accessibility */
-				0  /* USED 0 "close drawer" description for accessibility */
+				0,  /* USED 0 to bypass "open drawer" description for accessibility */
+				0  /* USED 0 to bypass "close drawer" description for accessibility */
 				) {
 			public void onDrawerClosed(View view) {
 				getActionBar().setTitle(barTitle);
@@ -94,30 +90,30 @@ public class ContactCard extends Activity {
 		getMenuInflater().inflate(R.menu.contact_card, menu);
 		return true;
 	}
-	
+
 	/* Called whenever we call invalidateOptionsMenu() */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
-        menu.findItem(R.id.editButton).setVisible(!drawerOpen);
-        menu.findItem(R.id.toggleButton).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
-	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
+		menu.findItem(R.id.editButton).setVisible(!drawerOpen);
+		menu.findItem(R.id.toggleButton).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
-		
+
 		/**
 		 * NAVIGATION DRAWER
 		 */
-		
+
 		// The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-       if (myDrawerToggle.onOptionsItemSelected(item)) {
-           return true;
-       }
+		// ActionBarDrawerToggle will take care of this.
+		if (myDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
 
 		/**
 		 * ACTION BAR
@@ -165,28 +161,28 @@ public class ContactCard extends Activity {
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			selectItem(position);
+		}
+	}
 
 	private void selectItem(int position) {
 
 	}
-	
-	@Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        myDrawerToggle.syncState();
-    }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
-        myDrawerToggle.onConfigurationChanged(newConfig);
-    }
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		myDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		myDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
 }
