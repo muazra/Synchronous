@@ -6,7 +6,6 @@
 
 package app.synchronous;
 
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -51,10 +50,11 @@ public class ContactCard extends Activity {
 		myDrawerTitle = "Available";
 		myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		myDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        myDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-//		myDrawerList.setAdapter(new ArrayAdapter<String>(this,
-//                R.layout.drawer_list_item, people));
-//        myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		myDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, people));
+        myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
 		// Action Bar icon toggles Drawer
@@ -94,14 +94,16 @@ public class ContactCard extends Activity {
 		getMenuInflater().inflate(R.menu.contact_card, menu);
 		return true;
 	}
-
-//	@Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        // If the nav drawer is open, hide action items related to the content view
-//        boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
-//        menu.findItem(R.id.editButton).setVisible(!drawerOpen);
-//        return super.onPrepareOptionsMenu(menu);
-//    }
+	
+	/* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
+        menu.findItem(R.id.editButton).setVisible(!drawerOpen);
+        menu.findItem(R.id.toggleButton).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,33 +164,29 @@ public class ContactCard extends Activity {
 		return true;
 	}
 
-//	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            selectItem(position);
-//        }
-//    }
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
 	private void selectItem(int position) {
 
-		// USE FRAGMENT HERE
-
-		//		myDrawerList.setItemChecked(position, true);
-		//        myDrawerLayout.closeDrawer(myDrawerList);
-
 	}
 	
-//	@Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        // Sync the toggle state after onRestoreInstanceState has occurred.
-//        myDrawerToggle.syncState();
-//    }
-//
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        // Pass any configuration change to the drawer toggls
-//        myDrawerToggle.onConfigurationChanged(newConfig);
-//    }
+	@Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        myDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        myDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
 }
