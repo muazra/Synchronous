@@ -2,29 +2,15 @@ package com.android.synchronous;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.TextView;
 
-public class LoginActivity extends Activity {
-
-    TextView signupTextView;
-
+public class NewUserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        signupTextView = (TextView) findViewById(R.id.link_signup);
-        signupTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NewUserActivity.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_newuser);
     }
 
     @Override
@@ -36,5 +22,4 @@ public class LoginActivity extends Activity {
         actionBar.hide();
         return true;
     }
-
 }
