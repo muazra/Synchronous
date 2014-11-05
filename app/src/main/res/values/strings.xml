@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">Synchronous</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name_lower">synchronous</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Log In</string>
+    <string name="signup"><u>Sign Up for Synchronous</u></string>
     <string name="action_settings">Settings</string>
 
 </resources>
