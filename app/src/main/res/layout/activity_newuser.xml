@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="#2C51A2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="quick setup"
-        android:textSize="30sp"
+        android:id="@+id/setup_banner"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="15dp"
         />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scroll"
+        android:id="@+id/form"
+        android:layout_below="@id/setup_banner"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textColor="#FFF"
                 android:text="New Account"/>
 
@@ -48,13 +44,13 @@
                 />
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="@string/username"/>
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="@string/password"/>
@@ -65,7 +61,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textColor="#FFF"
                 android:text="Contact Card"/>
 
@@ -79,39 +75,72 @@
                 />
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Full Name"/>
+                android:hint="Full Name"/>
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Email"/>
+                android:hint="Email"/>
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Phone #"/>
+                android:hint="Phone #"/>
 
             <EditText
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Company"/>
+                android:hint="Company"/>
 
-            </LinearLayout>
-        
-    </ScrollView>
-    
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/form">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/upload_new"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:text="@string/upload_photo"
+            />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:id="@+id/image_new"
+            android:padding="1dp"
+            android:contentDescription="Account Photo"
+            />
+
+    </LinearLayout>
+
     <Button
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#093698"
-        android:layout_marginTop="100dp"
-        android:layout_gravity="center"
-        android:text="Submit"/>
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        />
 
-</LinearLayout>
+</RelativeLayout>

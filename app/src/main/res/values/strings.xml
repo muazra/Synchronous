@@ -7,6 +7,7 @@
     <string name="password">password</string>
     <string name="login">Log In</string>
     <string name="signup"><u>Sign Up for Synchronous</u></string>
+    <string name="upload_photo">Upload Photo</string>
     <string name="action_settings">Settings</string>
 
 </resources>
