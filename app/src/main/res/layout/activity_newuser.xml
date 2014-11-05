@@ -53,6 +53,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:password="true"
                 android:hint="@string/password"/>
 
             <TextView
@@ -138,6 +139,7 @@
         android:background="#093698"
         android:textColor="#FFF"
         android:textSize="20sp"
+        android:id="@+id/newuser_submit"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Submit"
