@@ -1,8 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity" >
+    tools:context=".LoginActivity" >
+
+    <item android:id="@+id/action_discovery"
+          android:title="Discovery"
+          android:orderInCategory="1"
+          android:icon="@drawable/ic_discovery_off"
+          android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_cards"
+          android:title="@string/action_cards"
+          android:orderInCategory="2"
+          android:showAsAction="never" />
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="3"
         android:showAsAction="never" />
+
 </menu>
