@@ -3,6 +3,7 @@ package com.android.synchronous;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,8 +17,8 @@ public class FindCardsActivity extends Activity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getMenuInflater().inflate(R.menu.main, menu);
-        getActionBar().hide();
         return true;
     }
 
@@ -37,6 +38,12 @@ public class FindCardsActivity extends Activity{
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                return true;
+            case android.R.id.home:
+                intent = new Intent(this, CardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                NavUtils.navigateUpTo(this, intent);
                 return true;
         }
         return true;

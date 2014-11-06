@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/CustomActionBarTheme" >
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" >
@@ -18,10 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewUserActivity" />
-        <activity android:name=".CardActivity" />
-        <activity android:name=".FindCardsActivity" />
-        <activity android:name=".SavedCardsActivity" />
+        <activity android:name=".NewUserActivity"
+                  android:label="@string/quick_setup"
+                  android:parentActivityName=".LoginActivity"/>
+
+        <activity android:name=".CardActivity"
+                  android:label="@string/my_card"/>
+
+        <activity android:name=".FindCardsActivity"
+                  android:label="@string/find_cards"
+                  android:parentActivityName=".CardActivity"/>
+
+        <activity android:name=".SavedCardsActivity"
+                  android:label="@string/saved_cards"
+                  android:parentActivityName=".CardActivity"/>
     </application>
 
 </manifest>

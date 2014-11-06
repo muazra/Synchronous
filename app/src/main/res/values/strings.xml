@@ -13,4 +13,9 @@
     <string name="action_savedcards">Saved </string>
     <string name="action_mycard">Mine</string>
 
+    <string name="quick_setup">quick setup</string>
+    <string name="my_card">my card</string>
+    <string name="find_cards">find cards</string>
+    <string name="saved_cards">saved cards</string>
+
 </resources>

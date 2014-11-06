@@ -6,26 +6,13 @@
                 android:layout_height="match_parent"
                 android:background="#2C51A2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="saved cards"
-        android:id="@+id/cards_banner"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#545E65"
+        android:background="#FFFFFF"
         android:id="@+id/listView"
-        android:layout_below="@id/cards_banner"
         android:layout_above="@+id/refresh_savedcards"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:divider="#000000"
@@ -37,6 +24,7 @@
         android:background="#093698"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:textColor="#FFF"
         android:id="@+id/refresh_savedcards"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

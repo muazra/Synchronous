@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 public class CardActivity extends Activity {
@@ -16,20 +15,11 @@ public class CardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
-
-        mDiscovery = (ImageView) findViewById(R.id.discovery_logo);
-        mDiscovery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDiscovery.setImageResource(R.drawable.ic_discovery_on);
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        getActionBar().hide();
+        getMenuInflater().inflate(R.menu.menu_card, menu);
         return true;
     }
 
@@ -49,6 +39,9 @@ public class CardActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                return true;
+            case R.id.action_discovery:
+                item.setIcon(R.drawable.ic_discovery_on);
                 return true;
         }
         return true;

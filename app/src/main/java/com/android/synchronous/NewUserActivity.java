@@ -72,7 +72,7 @@ public class NewUserActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getActionBar().hide();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
