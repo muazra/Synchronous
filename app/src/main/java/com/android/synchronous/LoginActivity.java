@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.Parse;
+
 public class LoginActivity extends Activity {
 
     private TextView signupTextView;
@@ -17,6 +19,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Parse.initialize(this, "TmZHxDzLuiQBpzODDec0zDix04RCF2fSdzLSnBLB", "5Aedz07mBLrFQuVT6Gj7OVh2dVqEPD35531pTBPk");
 
         signupTextView = (TextView) findViewById(R.id.link_signup);
         signupTextView.setOnClickListener(new View.OnClickListener() {
