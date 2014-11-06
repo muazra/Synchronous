@@ -18,64 +18,72 @@
         android:layout_marginBottom="5dp"
         />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/card_banner"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/cardImage"
-        app:border_width="2dp"
-        app:border_color="#FF000000"/>
+        android:layout_above="@id/edit_card"
+        android:background="#545E65">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cardImage"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/cardName"
-        android:textColor="#FFF"
-        android:textSize="22sp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/cardImage"
+            app:border_width="2dp"
+            app:border_color="#FF000000"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@id/cardName"
-        android:id="@+id/cardTitle"
-        android:textColor="#FFF"
-        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardImage"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/cardName"
+            android:textColor="#FFF"
+            android:textSize="22sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@id/cardTitle"
-        android:id="@+id/cardNumber"
-        android:textColor="#FFF"
-        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/cardName"
+            android:id="@+id/cardTitle"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/cardNumber"
-        android:id="@+id/cardEmail"
-        android:textColor="#FFF"
-        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/cardTitle"
+            android:id="@+id/cardNumber"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/cardEmail"
-        android:id="@+id/cardCompany"
-        android:textColor="#FFF"
-        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/cardNumber"
+            android:id="@+id/cardEmail"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/cardEmail"
+            android:id="@+id/cardCompany"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
+
+        </RelativeLayout>
 
     <Button
         android:layout_width="match_parent"

@@ -10,5 +10,6 @@
     <string name="upload_photo">Upload Photo</string>
     <string name="action_settings">Settings</string>
     <string name="action_cards">Find Cards</string>
+    <string name="action_mycard">My Card</string>
 
 </resources>
