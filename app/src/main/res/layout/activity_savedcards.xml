@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#2C51A2">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#2C51A2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="find cards"
+        android:text="saved cards"
         android:id="@+id/cards_banner"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -25,7 +25,7 @@
         android:background="#545E65"
         android:id="@+id/listView"
         android:layout_below="@id/cards_banner"
-        android:layout_above="@+id/refresh_findcards"
+        android:layout_above="@+id/refresh_savedcards"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:divider="#000000"
@@ -37,7 +37,7 @@
         android:background="#093698"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:id="@+id/refresh_findcards"
+        android:id="@+id/refresh_savedcards"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Refresh"

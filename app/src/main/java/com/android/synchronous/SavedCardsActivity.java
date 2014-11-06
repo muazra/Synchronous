@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class FindCardsActivity extends Activity{
+public class SavedCardsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_findcards);
+        setContentView(R.layout.activity_savedcards);
     }
 
     @Override
@@ -23,16 +23,17 @@ public class FindCardsActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_mycard:
-                Intent intent = new Intent(this, CardActivity.class);
+                intent = new Intent(this, CardActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 return true;
-            case R.id.action_savedcards:
-                intent = new Intent(this, SavedCardsActivity.class);
+            case R.id.action_findcards:
+                intent = new Intent(this, FindCardsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

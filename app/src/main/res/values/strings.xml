@@ -9,7 +9,8 @@
     <string name="signup"><u>Sign Up for Synchronous</u></string>
     <string name="upload_photo">Upload Photo</string>
     <string name="action_settings">Settings</string>
-    <string name="action_cards">Find Cards</string>
-    <string name="action_mycard">My Card</string>
+    <string name="action_findcards">Find</string>
+    <string name="action_savedcards">Saved </string>
+    <string name="action_mycard">Mine</string>
 
 </resources>

@@ -18,6 +18,7 @@
         <activity android:name=".NewUserActivity" />
         <activity android:name=".CardActivity" />
         <activity android:name=".FindCardsActivity" />
+        <activity android:name=".SavedCardsActivity" />
     </application>
 
 </manifest>

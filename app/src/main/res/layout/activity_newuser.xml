@@ -117,13 +117,14 @@
         android:orientation="horizontal"
         android:layout_below="@id/form">
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:gravity="center"
             android:id="@+id/upload_new"
             android:textSize="18sp"
+            android:background="#093698"
             android:layout_gravity="center"
             android:text="@string/upload_photo"
             />
@@ -133,6 +134,8 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:id="@+id/image_new"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:padding="1dp"
             android:contentDescription="Account Photo"
             />

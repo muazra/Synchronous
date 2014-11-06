@@ -7,14 +7,14 @@
           android:orderInCategory="1"
           android:showAsAction="never" />
 
-    <item android:id="@+id/action_cards"
-          android:title="@string/action_cards"
+    <item android:id="@+id/action_findcards"
+          android:title="@string/action_findcards"
           android:orderInCategory="2"
           android:showAsAction="never" />
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="3"
-        android:showAsAction="never" />
+    <item android:id="@+id/action_savedcards"
+          android:title="@string/action_savedcards"
+          android:orderInCategory="3"
+          android:showAsAction="never" />
 
 </menu>
