@@ -8,7 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +22,12 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 public class NewUserActivity extends Activity {
 
     private static final int SELECT_PICTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private TextView mUsername;
     private TextView mPassword;
@@ -33,11 +37,14 @@ public class NewUserActivity extends Activity {
     private TextView mCompany;
     private TextView mTitle;
     private Button mSubmit;
-    private Button mUpload;
+    private Button mUploadPhoto;
+    private Button mTakePhoto;
     private ImageView mImage;
 
     private ContactModel mContactModel;
     private Context mContext = this;
+
+    private Uri mFileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,6 @@ public class NewUserActivity extends Activity {
         setContentView(R.layout.activity_newuser);
 
         mContactModel = new ContactModel();
-
         mUsername = (TextView) findViewById(R.id.username_new);
         mPassword = (TextView) findViewById(R.id.password_new);
         mName = (TextView) findViewById(R.id.name_new);
@@ -53,17 +59,39 @@ public class NewUserActivity extends Activity {
         mPhone = (TextView) findViewById(R.id.phone_new);
         mCompany = (TextView) findViewById(R.id.company_new);
         mTitle = (TextView) findViewById(R.id.title_new);
-        mUpload = (Button) findViewById(R.id.upload_new);
+        mUploadPhoto = (Button) findViewById(R.id.upload_new);
         mSubmit = (Button) findViewById(R.id.submit_new);
         mImage = (ImageView) findViewById(R.id.image_new);
+        mTakePhoto = (Button) findViewById(R.id.take_photo_new);
 
-        mUpload.setOnClickListener(new View.OnClickListener() {
+        mUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+            }
+        });
+
+        mTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create folder to store image
+                File imagesFolder = new File(Environment.getExternalStorageDirectory(),"Camera");
+                imagesFolder.mkdirs();
+
+                //create image file reference
+                File imageFile = new File(imagesFolder,"image.jpg");
+
+                mFileUri = Uri.fromFile(imageFile);
+                Log.d("cameraActivity", mFileUri.getPath());
+
+                //create intent and launch camera
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,mFileUri);
+
+                startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
             }
         });
 
@@ -95,7 +123,6 @@ public class NewUserActivity extends Activity {
                         }
                     }
                 });
-
             }
         });
 
@@ -124,6 +151,16 @@ public class NewUserActivity extends Activity {
                 byte[] byteArray = stream.toByteArray();
                 mContactModel.setPhoto(byteArray);
 
+            }
+            if(requestCode == REQUEST_IMAGE_CAPTURE){
+                Bitmap imageBitmap = BitmapFactory.decodeFile(mFileUri.getPath());
+                Bitmap compressedBitmap = scaleDownBitmap(imageBitmap, 75, mContext);
+                mImage.setImageBitmap(compressedBitmap);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                mContactModel.setPhoto(byteArray);
             }
         }
     }
