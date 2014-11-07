@@ -1,6 +1,7 @@
 package com.android.synchronous;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -36,11 +37,14 @@ public class NewUserActivity extends Activity {
     private ImageView mImage;
 
     private ContactModel mContactModel;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newuser);
+
+        mContactModel = new ContactModel();
 
         mUsername = (TextView) findViewById(R.id.username_new);
         mPassword = (TextView) findViewById(R.id.password_new);
@@ -63,12 +67,6 @@ public class NewUserActivity extends Activity {
             }
         });
 
-        mContactModel = new ContactModel();
-        submitButton();
-
-    }
-
-    private void submitButton(){
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +87,7 @@ public class NewUserActivity extends Activity {
                     @Override
                     public void done(ParseException e) {
                         if(e == null){
-                            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                            Intent intent = new Intent(mContext, CardActivity.class);
                             intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
                             startActivity(intent);
                         } else {
@@ -100,6 +98,7 @@ public class NewUserActivity extends Activity {
 
             }
         });
+
     }
 
     @Override
@@ -117,14 +116,27 @@ public class NewUserActivity extends Activity {
                 cursor.close();
 
                 Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
-                mImage.setImageBitmap(imageBitmap);
+                Bitmap compressedBitmap = scaleDownBitmap(imageBitmap, 75, mContext);
+                mImage.setImageBitmap(compressedBitmap);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 mContactModel.setPhoto(byteArray);
+
             }
         }
+    }
+
+    public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
+
+        final float densityMultiplier = context.getResources().getDisplayMetrics().density;
+
+        int h = (int) (newHeight*densityMultiplier);
+        int w = (int) (h * photo.getWidth()/((double) photo.getHeight()));
+
+        photo = Bitmap.createScaledBitmap(photo, w, h, true);
+        return photo;
     }
 
     @Override

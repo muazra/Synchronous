@@ -30,7 +30,6 @@
             android:layout_below="@id/cardImage"
             android:layout_centerHorizontal="true"
             android:id="@+id/cardName"
-            android:textColor="#FFF"
             android:textSize="22sp"/>
 
         <TextView
@@ -40,7 +39,6 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/cardName"
             android:id="@+id/cardTitle"
-            android:textColor="#FFF"
             android:textSize="16sp"/>
 
         <TextView
@@ -50,7 +48,6 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/cardTitle"
             android:id="@+id/cardNumber"
-            android:textColor="#FFF"
             android:textSize="16sp"/>
 
         <TextView
@@ -59,7 +56,6 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/cardNumber"
             android:id="@+id/cardEmail"
-            android:textColor="#FFF"
             android:textSize="16sp"/>
 
         <TextView
@@ -68,7 +64,6 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/cardEmail"
             android:id="@+id/cardCompany"
-            android:textColor="#FFF"
             android:textSize="16sp"/>
 
         </RelativeLayout>
