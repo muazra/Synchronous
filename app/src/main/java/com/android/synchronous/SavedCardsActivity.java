@@ -46,6 +46,13 @@ public class SavedCardsActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 NavUtils.navigateUpTo(this, intent);
                 return true;
+            case R.id.action_logout:
+                intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                return true;
         }
         return true;
     }

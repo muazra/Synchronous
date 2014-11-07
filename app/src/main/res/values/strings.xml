@@ -19,4 +19,6 @@
     <string name="find_cards">find cards</string>
     <string name="saved_cards">saved cards</string>
 
+    <string name="action_logout">Logout</string>
+
 </resources>
