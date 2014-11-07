@@ -8,10 +8,17 @@ import android.view.MenuItem;
 
 public class CardActivity extends Activity {
 
+    public static final String EXTRA_CONTACT_CARD =
+            "com.android.synchronous.contact_card";
+
+    private ContactModel mContactModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
+
+        mContactModel = (ContactModel) getIntent().getSerializableExtra(EXTRA_CONTACT_CARD);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.android.synchronous;
 
+import java.io.Serializable;
+
 /**
  * Class for contact object.
  * @author Muaz Rahman
  */
-public class ContactModel {
+public class ContactModel implements Serializable{
 
     private String username;
     private String password;

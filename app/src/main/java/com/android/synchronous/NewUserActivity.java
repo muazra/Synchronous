@@ -89,11 +89,11 @@ public class NewUserActivity extends Activity {
                     @Override
                     public void done(ParseException e) {
                         if(e == null){
-                            //login successful
                             Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                            intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
                             startActivity(intent);
                         } else {
-                            //login not successful
+                            e.printStackTrace();
                         }
                     }
                 });
