@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 public class CardActivity extends Activity {
-
-    private ImageView mDiscovery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

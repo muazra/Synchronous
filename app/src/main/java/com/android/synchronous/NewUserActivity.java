@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+
 public class NewUserActivity extends Activity {
 
     private static final int SELECT_PICTURE = 1;
@@ -65,6 +67,10 @@ public class NewUserActivity extends Activity {
 
                 Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
                 mImage.setImageBitmap(imageBitmap);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
             }
         }
     }
