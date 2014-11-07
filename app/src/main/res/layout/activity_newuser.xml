@@ -34,12 +34,14 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/username_new"
                 android:hint="@string/username"/>
 
             <EditText
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/password_new"
                 android:password="true"
                 android:hint="@string/password"/>
 
@@ -66,31 +68,36 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/name_new"
                 android:hint="Full Name"/>
 
             <EditText
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/email_new"
                 android:hint="Email"/>
 
             <EditText
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/phone_new"
                 android:hint="Phone #"/>
 
             <EditText
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:id="@+id/company_new"
                 android:hint="Company"/>
 
-        <EditText
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:hint="Title"/>
+            <EditText
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/title_new"
+                android:hint="Title"/>
 
     </LinearLayout>
 
@@ -135,7 +142,7 @@
         android:background="#093698"
         android:textColor="#FFF"
         android:textSize="20sp"
-        android:id="@+id/newuser_submit"
+        android:id="@+id/submit_new"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Submit"
