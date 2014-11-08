@@ -17,10 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -106,23 +102,27 @@ public class NewUserActivity extends Activity {
                 mContactModel.setCompany(mCompany.getText().toString());
                 mContactModel.setTitle(mTitle.getText().toString());
 
-                ParseUser user = new ParseUser();
-                user.setUsername(mContactModel.getUsername());
-                user.setPassword(mContactModel.getPassword());
-                user.put("contactModel", mContactModel);
+                Intent intent = new Intent(mContext, CardActivity.class);
+                intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
+                startActivity(intent);
 
-                user.signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            Intent intent = new Intent(mContext, CardActivity.class);
-                            intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
-                            startActivity(intent);
-                        } else {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+//                ParseUser user = new ParseUser();
+//                user.setUsername(mContactModel.getUsername());
+//                user.setPassword(mContactModel.getPassword());
+//                user.put("contactModel", mContactModel);
+//
+//                user.signUpInBackground(new SignUpCallback() {
+//                    @Override
+//                    public void done(ParseException e) {
+//                        if(e == null){
+//                            Intent intent = new Intent(mContext, CardActivity.class);
+//                            intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
+//                            startActivity(intent);
+//                        } else {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
             }
         });
 
