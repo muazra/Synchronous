@@ -29,7 +29,7 @@ public class MyCardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+        setContentView(R.layout.activity_mycard);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 

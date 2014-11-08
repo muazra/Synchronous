@@ -8,9 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -24,6 +28,8 @@ public class SavedCardsActivity extends ListActivity {
     private Context mContext = this;
     private List<ParseUser> savedContacts;
 
+    private Button mRefresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +38,40 @@ public class SavedCardsActivity extends ListActivity {
         savedContacts = new ArrayList<ParseUser>();
         updateList();
 
+        mRefresh = (Button) findViewById(R.id.refresh_savedcards);
+        mRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateList();
+            }
+        });
+
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView name = (TextView) view.findViewById(R.id.card_row_name);
+                for(int i=0; i<savedContacts.size(); i++){
+                    if(name.getText().toString().equals(savedContacts.get(i).get("name"))){
+                        final Intent intent = new Intent(mContext, SavedCardActivity.class);
+                        intent.putExtra(SavedCardActivity.PASSED_IN_NAME, savedContacts.get(i).get("name").toString());
+                        intent.putExtra(SavedCardActivity.PASSED_IN_EMAIL, savedContacts.get(i).get("email").toString());
+                        intent.putExtra(SavedCardActivity.PASSED_IN_COMPANY, savedContacts.get(i).get("company").toString());
+                        intent.putExtra(SavedCardActivity.PASSED_IN_TITLE, savedContacts.get(i).get("title").toString());
+                        intent.putExtra(SavedCardActivity.PASSED_IN_PHONE, savedContacts.get(i).get("phone").toString());
+
+                        ParseFile imageFile = (ParseFile) savedContacts.get(i).get("photo");
+                        imageFile.getDataInBackground(new GetDataCallback() {
+                            @Override
+                            public void done(byte[] bytes, ParseException e) {
+                                intent.putExtra(SavedCardActivity.PASSED_IN_IMAGE, bytes);
+                                startActivity(intent);
+
+                            }
+                        });
+                        break;
+                    }
+
+                }
 
             }
         });
@@ -42,24 +79,27 @@ public class SavedCardsActivity extends ListActivity {
     }
 
     private void updateList(){
-        JSONArray users = (JSONArray) ParseUser.getCurrentUser().get("savedContacts");
-        for(int i=0; i<users.length(); i++){
-            try{
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("name", users.get(i));
-                query.getFirstInBackground(new GetCallback<ParseUser>() {
-                    @Override
-                    public void done(ParseUser parseUser, ParseException e) {
-                        savedContacts.add(parseUser);
-                    }
-                });
-            } catch (Exception e){
-                e.printStackTrace();
+        JSONArray users = ParseUser.getCurrentUser().getJSONArray("savedContacts");
+
+        if(users.length() != 0) {
+            for (int i = 0; i < users.length(); i++) {
+                try {
+                    ParseQuery<ParseUser> query = ParseUser.getQuery();
+                    query.whereEqualTo("name", users.get(i));
+                    query.getFirstInBackground(new GetCallback<ParseUser>() {
+                        @Override
+                        public void done(ParseUser parseUser, ParseException e) {
+                            savedContacts.add(parseUser);
+
+                            ContactListAdapter adapter = new ContactListAdapter(mContext, savedContacts);
+                            setListAdapter(adapter);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        ContactListAdapter adapter = new ContactListAdapter(mContext, savedContacts);
-        setListAdapter(adapter);
 
     }
 

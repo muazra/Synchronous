@@ -69,6 +69,7 @@ public class FindCardsActivity extends ListActivity{
                         //do nothing
                     }
                 });
+                builder.show();
             }
         });
     }
@@ -79,23 +80,27 @@ public class FindCardsActivity extends ListActivity{
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> parseUsers, ParseException e) {
-                JSONArray savedContacts = (JSONArray) ParseUser.getCurrentUser().get("savedContacts");
 
-                for(int i=0; i<parseUsers.size(); i++){
-                    for(int j=0; j<savedContacts.length(); j++){
-                        try{
-                            if(savedContacts.get(j).equals(parseUsers.get(i).get("name"))){
-                                parseUsers.remove(i);
-                                break;
+                if(parseUsers.size() != 0){
+                    JSONArray savedContacts = ParseUser.getCurrentUser().getJSONArray("savedContacts");
+
+                    for(int i=0; i<parseUsers.size(); i++){
+                        for(int j=0; j<savedContacts.length(); j++){
+                            try{
+                                if(savedContacts.get(j).equals(parseUsers.get(i).get("name"))){
+                                    parseUsers.remove(i);
+                                    break;
+                                }
+                            } catch (Exception ex){
+                                ex.printStackTrace();
                             }
-                        } catch (Exception ex){
-                            ex.printStackTrace();
                         }
                     }
+
+                    ContactListAdapter adapter = new ContactListAdapter(mContext, parseUsers);
+                    setListAdapter(adapter);
                 }
 
-                ContactListAdapter adapter = new ContactListAdapter(mContext, parseUsers);
-                setListAdapter(adapter);
             }
         });
     }
