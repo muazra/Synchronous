@@ -16,9 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 public class NewUserActivity extends Activity {
 
@@ -37,28 +45,34 @@ public class NewUserActivity extends Activity {
     private Button mTakePhoto;
     private ImageView mImage;
 
-    private ContactModel mContactModel;
+    private ParseUser mParseUser;
     private Context mContext = this;
 
     private Uri mFileUri;
+    private byte[] imageBytes;
+    private ParseFile imageFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newuser);
 
-        mContactModel = new ContactModel();
+        mParseUser = new ParseUser();
+
         mUsername = (TextView) findViewById(R.id.username_new);
         mPassword = (TextView) findViewById(R.id.password_new);
+
         mName = (TextView) findViewById(R.id.name_new);
         mEmail = (TextView) findViewById(R.id.email_new);
         mPhone = (TextView) findViewById(R.id.phone_new);
         mCompany = (TextView) findViewById(R.id.company_new);
         mTitle = (TextView) findViewById(R.id.title_new);
+
         mUploadPhoto = (Button) findViewById(R.id.upload_new);
         mSubmit = (Button) findViewById(R.id.submit_new);
-        mImage = (ImageView) findViewById(R.id.image_new);
         mTakePhoto = (Button) findViewById(R.id.take_photo_new);
+
+        mImage = (ImageView) findViewById(R.id.image_new);
 
         mUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,17 +87,14 @@ public class NewUserActivity extends Activity {
         mTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //create folder to store image
                 File imagesFolder = new File(Environment.getExternalStorageDirectory(),"Camera");
                 imagesFolder.mkdirs();
 
-                //create image file reference
                 File imageFile = new File(imagesFolder,"image.jpg");
 
                 mFileUri = Uri.fromFile(imageFile);
                 Log.d("cameraActivity", mFileUri.getPath());
 
-                //create intent and launch camera
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,mFileUri);
 
@@ -94,35 +105,44 @@ public class NewUserActivity extends Activity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContactModel.setUsername(mUsername.getText().toString());
-                mContactModel.setPassword(mPassword.getText().toString());
-                mContactModel.setName(mName.getText().toString());
-                mContactModel.setEmail(mEmail.getText().toString());
-                mContactModel.setPhone(mPhone.getText().toString());
-                mContactModel.setCompany(mCompany.getText().toString());
-                mContactModel.setTitle(mTitle.getText().toString());
 
-                Intent intent = new Intent(mContext, CardActivity.class);
-                intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
-                startActivity(intent);
+                mParseUser.setUsername(mUsername.getText().toString());
+                mParseUser.setPassword(mPassword.getText().toString());
+                mParseUser.setEmail(mEmail.getText().toString());
+                mParseUser.put("name", mName.getText().toString());
+                mParseUser.put("phone", mPhone.getText().toString());
+                mParseUser.put("company", mCompany.getText().toString());
+                mParseUser.put("title", mTitle.getText().toString());
+                mParseUser.put("discoverMode", false);
+                mParseUser.put("savedContacts", new ArrayList<String>());
 
-//                ParseUser user = new ParseUser();
-//                user.setUsername(mContactModel.getUsername());
-//                user.setPassword(mContactModel.getPassword());
-//                user.put("contactModel", mContactModel);
-//
-//                user.signUpInBackground(new SignUpCallback() {
-//                    @Override
-//                    public void done(ParseException e) {
-//                        if(e == null){
-//                            Intent intent = new Intent(mContext, CardActivity.class);
-//                            intent.putExtra(CardActivity.EXTRA_CONTACT_CARD, mContactModel);
-//                            startActivity(intent);
-//                        } else {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
+                imageFile = new ParseFile("image.png", imageBytes);
+                imageFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        mParseUser.put("photo", imageFile);
+
+                        mParseUser.signUpInBackground(new SignUpCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null){
+                                    Intent intent = new Intent(mContext, LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    Toast.makeText(mContext, "Signup successful. Please login above.",
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    e.printStackTrace();
+                                    Toast.makeText(mContext, "Signup unsuccessful. Please try again.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
             }
         });
 
@@ -148,8 +168,7 @@ public class NewUserActivity extends Activity {
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                mContactModel.setPhoto(byteArray);
+                imageBytes = stream.toByteArray();
 
             }
             if(requestCode == REQUEST_IMAGE_CAPTURE){
@@ -159,8 +178,7 @@ public class NewUserActivity extends Activity {
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                mContactModel.setPhoto(byteArray);
+                imageBytes = stream.toByteArray();
             }
         }
     }

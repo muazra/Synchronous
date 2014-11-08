@@ -10,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardActivity extends Activity {
-
-    public static final String EXTRA_CONTACT_CARD =
-            "com.android.synchronous.contact_card";
 
     private CircleImageView mImage;
     private TextView mName;
@@ -24,33 +26,40 @@ public class CardActivity extends Activity {
     private TextView mCompany;
     private TextView mTitle;
 
-    private ContactModel mContactModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
-        mContactModel = (ContactModel) getIntent().getSerializableExtra(EXTRA_CONTACT_CARD);
 
-        mImage = (CircleImageView) findViewById(R.id.cardImage);
-        Bitmap imageBitmap = BitmapFactory.decodeByteArray(mContactModel.getPhoto(), 0,
-                mContactModel.getPhoto().length);
-        mImage.setImageBitmap(imageBitmap);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        ParseFile imageFile = (ParseFile) currentUser.get("photo");
+        imageFile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+
+                mImage = (CircleImageView) findViewById(R.id.cardImage);
+                Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0,
+                        bytes.length);
+                mImage.setImageBitmap(imageBitmap);
+
+            }
+        });
 
         mName = (TextView) findViewById(R.id.cardName);
-        mName.setText(mContactModel.getName());
+        mName.setText(currentUser.get("name").toString());
 
         mEmail = (TextView) findViewById(R.id.cardEmail);
-        mEmail.setText(mContactModel.getEmail());
+        mEmail.setText(currentUser.getEmail());
 
         mNumber = (TextView) findViewById(R.id.cardNumber);
-        mNumber.setText(mContactModel.getPhone());
+        mNumber.setText(currentUser.get("phone").toString());
 
         mCompany = (TextView) findViewById(R.id.cardCompany);
-        mCompany.setText(mContactModel.getCompany());
+        mCompany.setText(currentUser.get("company").toString());
 
         mTitle = (TextView) findViewById(R.id.cardTitle);
-        mTitle.setText(mContactModel.getTitle());
+        mTitle.setText(currentUser.get("title").toString());
     }
 
     @Override
@@ -80,6 +89,7 @@ public class CardActivity extends Activity {
                 item.setIcon(R.drawable.ic_discovery_on);
                 return true;
             case R.id.action_logout:
+                ParseUser.logOut();
                 intent = new Intent(this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

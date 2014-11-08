@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".NewUserActivity"
                   android:label="@string/quick_setup"
+                  android:windowSoftInputMode="adjustPan"
                   android:parentActivityName=".LoginActivity"/>
 
         <activity android:name=".CardActivity"
