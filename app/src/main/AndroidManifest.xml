@@ -24,16 +24,16 @@
                   android:windowSoftInputMode="adjustPan"
                   android:parentActivityName=".LoginActivity"/>
 
-        <activity android:name=".CardActivity"
+        <activity android:name=".MyCardActivity"
                   android:label="@string/my_card"/>
 
         <activity android:name=".FindCardsActivity"
                   android:label="@string/find_cards"
-                  android:parentActivityName=".CardActivity"/>
+                  android:parentActivityName=".MyCardActivity"/>
 
         <activity android:name=".SavedCardsActivity"
                   android:label="@string/saved_cards"
-                  android:parentActivityName=".CardActivity"/>
+                  android:parentActivityName=".MyCardActivity"/>
     </application>
 
 </manifest>

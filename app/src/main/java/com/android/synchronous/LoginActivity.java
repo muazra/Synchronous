@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
                         if (parseUser != null) {
-                            Intent intent = new Intent(mContext, CardActivity.class);
+                            Intent intent = new Intent(mContext, MyCardActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(mContext, "Login unsuccessful. Check credentials.",

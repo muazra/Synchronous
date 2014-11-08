@@ -10,8 +10,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_margin="5dp"
         app:border_width="2dp"
         app:border_color="#FF000000"
         android:id="@+id/card_row_photo"/>

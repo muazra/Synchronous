@@ -24,9 +24,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.json.JSONArray;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.ArrayList;
 
 public class NewUserActivity extends Activity {
 
@@ -114,7 +115,7 @@ public class NewUserActivity extends Activity {
                 mParseUser.put("company", mCompany.getText().toString());
                 mParseUser.put("title", mTitle.getText().toString());
                 mParseUser.put("discoverMode", false);
-                mParseUser.put("savedContacts", new ArrayList<String>());
+                mParseUser.put("savedContacts", new JSONArray());
 
                 imageFile = new ParseFile("image.png", imageBytes);
                 imageFile.saveInBackground(new SaveCallback() {
