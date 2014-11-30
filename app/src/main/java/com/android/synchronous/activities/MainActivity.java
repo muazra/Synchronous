@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_card, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         mRefreshIcon = menu.findItem(R.id.action_refresh);
         return super.onCreateOptionsMenu(menu);
     }

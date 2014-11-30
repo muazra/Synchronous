@@ -34,6 +34,10 @@
                   android:windowSoftInputMode="adjustPan"
                   android:parentActivityName=".activities.UserLoginActivity"/>
 
+        <activity android:name=".activities.CardActivity"
+                  android:label="View Card"
+                  android:parentActivityName=".activities.MainActivity"/>
+
          <activity android:name="com.facebook.LoginActivity"
                    android:theme="@android:style/Theme.Translucent.NoTitleBar"
                    android:label="@string/app_name" />
