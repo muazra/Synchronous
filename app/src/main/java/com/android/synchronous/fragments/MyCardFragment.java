@@ -3,11 +3,11 @@ package com.android.synchronous.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.android.synchronous.R;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -16,7 +16,7 @@ import com.parse.ParseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyCardFragment extends android.support.v4.app.Fragment {
+public class MyCardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

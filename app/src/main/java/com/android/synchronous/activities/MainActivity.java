@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.synchronous.R;
+import com.android.synchronous.fragments.FindCardsFragment;
 import com.android.synchronous.fragments.MyCardFragment;
+import com.android.synchronous.fragments.SavedCardsFragment;
 import com.android.synchronous.task.SetUserLocationTask;
 import com.parse.ParseUser;
 
@@ -63,6 +65,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
+                mRefreshIcon.setActionView(null);
                 return true;
 
             case R.id.action_discovery:
@@ -105,6 +108,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             switch (i) {
                 case 0:
                     return new MyCardFragment();
+                case 1:
+                    return new FindCardsFragment();
+                case 2:
+                    return new SavedCardsFragment();
                 default:
                     return new Fragment();
             }
