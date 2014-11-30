@@ -78,9 +78,9 @@ public class NewUserActivity extends Activity {
         mUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
             }
         });
@@ -127,7 +127,7 @@ public class NewUserActivity extends Activity {
                             @Override
                             public void done(ParseException e) {
                                 if(e == null){
-                                    Intent intent = new Intent(mContext, LoginActivity.class);
+                                    Intent intent = new Intent(mContext, UserLoginActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
@@ -185,7 +185,6 @@ public class NewUserActivity extends Activity {
     }
 
     public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
-
         final float densityMultiplier = context.getResources().getDisplayMetrics().density;
 
         int h = (int) (newHeight*densityMultiplier);

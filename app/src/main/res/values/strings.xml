@@ -3,7 +3,7 @@
 
     <string name="app_name">Synchronous</string>
     <string name="app_name_lower">synchronous</string>
-    <string name="username">username</string>
+    <string name="username">username/email</string>
     <string name="password">password</string>
     <string name="login">Log In</string>
     <string name="signup"><u>Sign Up for Synchronous</u></string>
@@ -14,11 +14,12 @@
     <string name="action_savedcards">Saved </string>
     <string name="action_mycard">Mine</string>
 
-    <string name="quick_setup">quick setup</string>
+    <string name="quick_setup">Quick Setup</string>
     <string name="my_card">my card</string>
     <string name="find_cards">find cards</string>
     <string name="saved_cards">saved cards</string>
 
     <string name="action_logout">Logout</string>
+    <string name="facebook_app_id">544207925713704</string>
 
 </resources>

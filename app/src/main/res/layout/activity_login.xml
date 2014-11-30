@@ -18,7 +18,7 @@
         android:textSize="42sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true"/>
 
@@ -32,7 +32,7 @@
         android:id="@+id/username_login"
         android:textColorHint="@android:color/black"
         android:layout_centerHorizontal="true"/>
-    
+
     <EditText
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -55,6 +55,14 @@
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:id="@+id/button_login"
+        android:layout_centerHorizontal="true"/>
+
+    <com.facebook.widget.LoginButton
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_login"
+        android:layout_marginTop="10dp"
+        android:id="@+id/button_fb_login"
         android:layout_centerHorizontal="true"/>
 
     <TextView
