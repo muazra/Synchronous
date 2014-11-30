@@ -1,13 +1,12 @@
 package com.android.synchronous.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.android.synchronous.R;
 import com.android.synchronous.adapters.RequestsActivityListAdapter;
@@ -24,10 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequestsActivity extends Activity {
+public class RequestsActivity extends ListActivity {
 
     private List<ParseUser> mRequestsList;
-    private ListView mRequestsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +33,9 @@ public class RequestsActivity extends Activity {
         setContentView(R.layout.activity_requests);
 
         mRequestsList = new ArrayList<ParseUser>();
-        mRequestsListView = (ListView) findViewById(R.id.requests_list);
-
         updateList();
 
-        mRequestsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), AlertDialog.THEME_HOLO_LIGHT);
@@ -171,7 +167,7 @@ public class RequestsActivity extends Activity {
         }
 
         RequestsActivityListAdapter adapter = new RequestsActivityListAdapter(this, mRequestsList);
-        mRequestsListView.setAdapter(adapter);
+        setListAdapter(adapter);
     }
 
     @Override

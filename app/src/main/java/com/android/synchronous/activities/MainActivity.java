@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.synchronous.R;
 import com.android.synchronous.fragments.FindCardsFragment;
@@ -31,11 +32,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     private ViewPager mViewPager;
     private MenuItem mRefreshIcon;
-    private Context mContext = this;
+    public static Context mContext;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this;
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
         final ActionBar actionBar = getActionBar();
@@ -70,7 +72,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             menu.findItem(R.id.action_discovery).setIcon(R.drawable.ic_discovery_off);
         }
 
-        if(ParseUser.getCurrentUser().getJSONArray("pending").length() > 0) {
+        if(ParseUser.getCurrentUser().getJSONArray("requests").length() > 0) {
             menu.findItem(R.id.action_requests).setIcon(R.drawable.requestspending_on);
         } else {
             menu.findItem(R.id.action_requests).setIcon(R.drawable.requestspending_off);
@@ -84,7 +86,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
-                mViewPager.setAdapter(mAppSectionsPagerAdapter);
+                //mViewPager.setAdapter(mAppSectionsPagerAdapter);
                 mRefreshIcon.setActionView(null);
                 return true;
 
@@ -93,10 +95,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     item.setIcon(R.drawable.ic_discovery_off);
                     ParseUser.getCurrentUser().put("discover", false);
                     ParseUser.getCurrentUser().saveInBackground();
+                    Toast.makeText(this, "Sharing Disabled", Toast.LENGTH_SHORT).show();
                     return true;
+                } else {
+                    item.setIcon(R.drawable.ic_discovery_on);
+                    SetUserLocationTask.setLocation(mContext);
+                    Toast.makeText(this, "Sharing Enabled", Toast.LENGTH_SHORT).show();
                 }
-                item.setIcon(R.drawable.ic_discovery_on);
-                SetUserLocationTask.setLocation(mContext);
                 return true;
 
             case R.id.action_requests:
@@ -109,7 +114,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 final EditText input = new EditText(MainActivity.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
                 input.setLayoutParams(lp);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
@@ -167,9 +172,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     return new FindCardsFragment();
                 case 2:
                     return new SavedCardsFragment();
-                default:
-                    return new Fragment();
             }
+            return new Fragment();
         }
 
         @Override
@@ -189,7 +193,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return "Synchronous";
         }
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)

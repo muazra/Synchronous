@@ -7,7 +7,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/saved_list"
+        android:id="@android:id/list"
         android:divider="#000000"
         android:dividerHeight="1dp"/>
 

@@ -119,7 +119,7 @@ public class UserSignupActivity extends Activity {
                 mParseUser.put("company", mCompany.getText().toString());
                 mParseUser.put("title", mTitle.getText().toString());
                 mParseUser.put("discover", false);
-                mParseUser.put("city", null);
+                mParseUser.put("city", "none");
                 mParseUser.put("saved", new JSONArray());
                 mParseUser.put("requests", new JSONArray());
                 mParseUser.put("requests_sent", new JSONArray());
