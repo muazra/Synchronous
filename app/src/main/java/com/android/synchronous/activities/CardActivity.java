@@ -26,7 +26,7 @@ public class CardActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_mycard);
+        setContentView(R.layout.activity_card);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", getIntent().getStringExtra(CARD_USERNAME));
@@ -62,7 +62,6 @@ public class CardActivity extends Activity {
 
         TextView mTitle = (TextView) findViewById(R.id.cardTitle);
         mTitle.setText(mParseUser.get("title").toString());
-
 
     }
 

@@ -67,9 +67,9 @@ public class FindCardsFragment extends Fragment {
                 builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ParseUser userRequested = mFindContactsList.get(position);
-                        JSONArray array = new JSONArray();
+                        JSONArray array = userRequested.getJSONArray("requests");
                         array.put(ParseUser.getCurrentUser().getUsername());
-                        userRequested.put("pending", array);
+                        userRequested.put("requests", array);
                         userRequested.saveInBackground();
 
                         mFindContactsList.remove(position);

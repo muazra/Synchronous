@@ -8,8 +8,8 @@
           android:title="Refresh"
           android:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_pending"
-          android:icon="@drawable/pending_off"
+    <item android:id="@+id/action_requests"
+          android:icon="@drawable/requestspending_off"
           android:title="Pending Requests"
           android:orderInCategory="1"
           android:showAsAction="ifRoom" />

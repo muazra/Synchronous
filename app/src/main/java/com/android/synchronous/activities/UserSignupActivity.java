@@ -121,7 +121,7 @@ public class UserSignupActivity extends Activity {
                 mParseUser.put("discover", false);
                 mParseUser.put("city", null);
                 mParseUser.put("saved", new JSONArray());
-                mParseUser.put("pending", new JSONArray());
+                mParseUser.put("requests", new JSONArray());
 
                 imageFile = new ParseFile("image.png", imageBytes);
                 imageFile.saveInBackground(new SaveCallback() {

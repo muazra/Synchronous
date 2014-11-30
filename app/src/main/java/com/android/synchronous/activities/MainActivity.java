@@ -3,6 +3,7 @@ package com.android.synchronous.activities;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -57,6 +58,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         mRefreshIcon = menu.findItem(R.id.action_refresh);
+
+        if(ParseUser.getCurrentUser().getBoolean("discover")) {
+            menu.findItem(R.id.action_discovery).setIcon(R.drawable.ic_discovery_on);
+        } else {
+            menu.findItem(R.id.action_discovery).setIcon(R.drawable.ic_discovery_off);
+        }
+
+        if(ParseUser.getCurrentUser().getJSONArray("pending").length() > 0) {
+            menu.findItem(R.id.action_pending).setIcon(R.drawable.requestspending_on);
+        } else {
+            menu.findItem(R.id.action_pending).setIcon(R.drawable.requestspending_off);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -65,6 +79,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
+                mViewPager.setAdapter(mAppSectionsPagerAdapter);
                 mRefreshIcon.setActionView(null);
                 return true;
 
@@ -75,10 +90,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     ParseUser.getCurrentUser().saveInBackground();
                     return true;
                 }
-
                 item.setIcon(R.drawable.ic_discovery_on);
                 SetUserLocationTask.setLocation(mContext);
                 return true;
+
+            case R.id.action_requests:
+                Intent intent = new Intent(this, RequestsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
 
             default:
                 return true;
