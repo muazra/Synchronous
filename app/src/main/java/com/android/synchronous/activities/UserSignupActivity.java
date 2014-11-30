@@ -1,4 +1,4 @@
-package com.android.synchronous;
+package com.android.synchronous.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,7 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Matrix;
 
+import com.android.synchronous.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -28,8 +31,9 @@ import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
-public class NewUserActivity extends Activity {
+public class UserSignupActivity extends Activity {
 
     private static final int SELECT_PICTURE = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 2;
@@ -56,7 +60,7 @@ public class NewUserActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_newuser);
+        setContentView(R.layout.activity_usersignup);
 
         mParseUser = new ParseUser();
 
@@ -114,8 +118,10 @@ public class NewUserActivity extends Activity {
                 mParseUser.put("phone", mPhone.getText().toString());
                 mParseUser.put("company", mCompany.getText().toString());
                 mParseUser.put("title", mTitle.getText().toString());
-                mParseUser.put("discoverMode", false);
-                mParseUser.put("savedContacts", new JSONArray());
+                mParseUser.put("discover", false);
+                mParseUser.put("city", null);
+                mParseUser.put("saved", new JSONArray());
+                mParseUser.put("pending", new JSONArray());
 
                 imageFile = new ParseFile("image.png", imageBytes);
                 imageFile.saveInBackground(new SaveCallback() {
@@ -140,13 +146,10 @@ public class NewUserActivity extends Activity {
                                 }
                             }
                         });
-
                     }
                 });
-
             }
         });
-
     }
 
     @Override
@@ -175,10 +178,11 @@ public class NewUserActivity extends Activity {
             if(requestCode == REQUEST_IMAGE_CAPTURE){
                 Bitmap imageBitmap = BitmapFactory.decodeFile(mFileUri.getPath());
                 Bitmap compressedBitmap = scaleDownBitmap(imageBitmap, 75, mContext);
-                mImage.setImageBitmap(compressedBitmap);
+                Bitmap validatedBitmap = imageOreintationValidator(compressedBitmap, mFileUri.getPath());
+                mImage.setImageBitmap(validatedBitmap);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                validatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 imageBytes = stream.toByteArray();
             }
         }
@@ -192,6 +196,43 @@ public class NewUserActivity extends Activity {
 
         photo = Bitmap.createScaledBitmap(photo, w, h, true);
         return photo;
+    }
+
+    private Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
+        ExifInterface ei;
+        try {
+            ei = new ExifInterface(path);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = rotateImage(bitmap, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = rotateImage(bitmap, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = rotateImage(bitmap, 270);
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    private Bitmap rotateImage(Bitmap source, float angle) {
+
+        Bitmap bitmap = null;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        try {
+            bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+        } catch (OutOfMemoryError err) {
+            err.printStackTrace();
+        }
+        return bitmap;
     }
 
     @Override

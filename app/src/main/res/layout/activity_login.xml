@@ -57,11 +57,14 @@
         android:id="@+id/button_login"
         android:layout_centerHorizontal="true"/>
 
-    <com.facebook.widget.LoginButton
+    <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/button_login"
         android:layout_marginTop="10dp"
+        android:background="#093698"
+        android:text="Log In with Facebook"
+        android:textColor="#FFFFFF"
         android:id="@+id/button_fb_login"
         android:layout_centerHorizontal="true"/>
 

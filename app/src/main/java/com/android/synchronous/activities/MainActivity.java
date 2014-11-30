@@ -1,24 +1,29 @@
-package com.android.synchronous;
+package com.android.synchronous.activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.android.synchronous.R;
+import com.android.synchronous.fragments.MyCardFragment;
+import com.android.synchronous.task.SetUserLocationTask;
+import com.parse.ParseUser;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-    ViewPager mViewPager;
-    MenuItem mRefreshIcon;
+    private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private MenuItem mRefreshIcon;
+    private Context mContext = this;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +63,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
-                //item.setActionView(null);
                 return true;
+
             case R.id.action_discovery:
+                if(ParseUser.getCurrentUser().getBoolean("discover")) {
+                    item.setIcon(R.drawable.ic_discovery_off);
+                    ParseUser.getCurrentUser().put("discover", false);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    return true;
+                }
+
                 item.setIcon(R.drawable.ic_discovery_on);
+                SetUserLocationTask.setLocation(mContext);
                 return true;
+
             default:
                 return true;
         }
@@ -82,7 +96,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
-
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -91,14 +104,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new MyCardsFragment();
-                case 1:
-                    return new FindCardsFragment();
-                case 2:
-                    return new SavedCardsFragment();
+                    return new MyCardFragment();
                 default:
-                    return null;
-
+                    return new Fragment();
             }
         }
 
@@ -110,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public CharSequence getPageTitle(int position) {
             if(position == 0)
-                return "My Cards";
+                return "My Card";
             if(position == 1)
                 return "Find Cards";
             if(position == 2)
@@ -120,34 +128,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
-    public static class MyCardsFragment extends Fragment {
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.cards_list, container, false);
-            return rootView;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        // Quit if back is pressed
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            moveTaskToBack(true);
+            return true;
         }
-    }
-
-    public static class FindCardsFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.cards_list, container, false);
-            return rootView;
-        }
-    }
-
-    public static class SavedCardsFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.cards_list, container, false);
-            return rootView;
-        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

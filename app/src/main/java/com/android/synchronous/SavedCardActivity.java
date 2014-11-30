@@ -30,7 +30,7 @@
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_mycard);
+//        setContentView(R.layout.fragment_mycard);
 //
 //        String name = getIntent().getStringExtra(PASSED_IN_NAME);
 //        String email = getIntent().getStringExtra(PASSED_IN_EMAIL);

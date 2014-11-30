@@ -18,23 +18,21 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name=".UserLoginActivity"
-            android:noHistory="true"
+            android:name=".activities.UserLoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
                   android:label="@string/app_name" />
 
-        <activity android:name=".NewUserActivity"
+        <activity android:name=".activities.UserSignupActivity"
                   android:label="@string/quick_setup"
                   android:windowSoftInputMode="adjustPan"
-                  android:parentActivityName=".UserLoginActivity"/>
+                  android:parentActivityName=".activities.UserLoginActivity"/>
 
          <activity android:name="com.facebook.LoginActivity"
                    android:theme="@android:style/Theme.Translucent.NoTitleBar"

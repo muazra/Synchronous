@@ -3,7 +3,7 @@
 
     <string name="app_name">Synchronous</string>
     <string name="app_name_lower">synchronous</string>
-    <string name="username">username/email</string>
+    <string name="username">username</string>
     <string name="password">password</string>
     <string name="login">Log In</string>
     <string name="signup"><u>Sign Up for Synchronous</u></string>
@@ -20,6 +20,10 @@
     <string name="saved_cards">saved cards</string>
 
     <string name="action_logout">Logout</string>
-    <string name="facebook_app_id">544207925713704</string>
+    <string name="facebook_app_id">569756256459862</string>
+
+    <string name="location_disabled">Location Disabled</string>
+    <string name="enable_location">Please enable location services</string>
+    <string name="open_location_settings">Location Settings</string>
 
 </resources>
