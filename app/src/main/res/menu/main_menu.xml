@@ -20,7 +20,7 @@
           android:title="Discovery"
           android:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_phone"
+    <item android:id="@+id/action_sendphone"
           android:icon="@drawable/ic_action_phone"
           android:orderInCategory="3"
           android:title="Send to Phone"

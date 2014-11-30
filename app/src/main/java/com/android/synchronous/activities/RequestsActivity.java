@@ -11,7 +11,9 @@ import android.widget.ListView;
 
 import com.android.synchronous.R;
 import com.android.synchronous.adapters.RequestsActivityListAdapter;
+import com.android.synchronous.task.JSONArrayRemoveTask;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -45,18 +47,48 @@ public class RequestsActivity extends Activity {
 
                 builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        String usernameAccepted = mRequestsList.get(position).getUsername();
+                        final String usernameAccepted = mRequestsList.get(position).getUsername();
 
-                        for(ParseUser user: mRequestsList){
-                            if(user.getUsername().equals(usernameAccepted))
-                                mRequestsList.remove(user);
+                        //remove from requests list
+                        mRequestsList.remove(position);
+                        JSONArray requestArray = new JSONArray();
+                        for(ParseUser u: mRequestsList){
+                            requestArray.put(u.getUsername());
                         }
-                        ParseUser.getCurrentUser().put("requests", new JSONArray(mRequestsList));
+                        ParseUser.getCurrentUser().put("requests", requestArray);
 
+                        //add to saved
                         JSONArray savedArray = ParseUser.getCurrentUser().getJSONArray("saved");
                         savedArray.put(usernameAccepted);
                         ParseUser.getCurrentUser().put("saved", savedArray);
 
+                        //remove from sending users requests_sent
+                        try {
+                            ParseQuery<ParseUser> query = ParseUser.getQuery();
+                            query.whereEqualTo("username", usernameAccepted);
+                            query.getFirstInBackground(new GetCallback<ParseUser>() {
+                                @Override
+                                public void done(ParseUser parseUser, ParseException e) {
+                                    try {
+                                        JSONArray sentArray = parseUser.getJSONArray("requests_sent");
+
+                                        for (int i = 0; i < sentArray.length(); i++) {
+                                            if (sentArray.get(i).equals(usernameAccepted))
+                                                sentArray = JSONArrayRemoveTask.remove(i, sentArray);
+                                        }
+
+                                        parseUser.put("requests_sent", sentArray);
+                                        parseUser.saveInBackground();
+                                    } catch (Exception j){
+                                        j.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //update parse database
                         ParseUser.getCurrentUser().saveInBackground();
                         updateList();
                     }
@@ -64,13 +96,43 @@ public class RequestsActivity extends Activity {
 
                 builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        String usernameAccepted = mRequestsList.get(position).getUsername();
+                        final String usernameAccepted = mRequestsList.get(position).getUsername();
 
-                        for(ParseUser user: mRequestsList){
-                            if(user.getUsername().equals(usernameAccepted))
-                                mRequestsList.remove(user);
+                        //remove from requests
+                        mRequestsList.remove(position);
+                        JSONArray requestArray = new JSONArray();
+                        for(ParseUser u: mRequestsList){
+                            requestArray.put(u.getUsername());
                         }
-                        ParseUser.getCurrentUser().put("requests", new JSONArray(mRequestsList));
+                        ParseUser.getCurrentUser().put("requests", requestArray);
+
+                        //remove from sending users requests_sent
+                        try {
+                            ParseQuery<ParseUser> query = ParseUser.getQuery();
+                            query.whereEqualTo("username", usernameAccepted);
+                            query.getFirstInBackground(new GetCallback<ParseUser>() {
+                                @Override
+                                public void done(ParseUser parseUser, ParseException e) {
+                                    try {
+                                        JSONArray sentArray = parseUser.getJSONArray("requests_sent");
+
+                                        for (int i = 0; i < sentArray.length(); i++) {
+                                            if (sentArray.get(i).equals(usernameAccepted))
+                                                sentArray = JSONArrayRemoveTask.remove(i, sentArray);
+                                        }
+
+                                        parseUser.put("requests_sent", sentArray);
+                                        parseUser.saveInBackground();
+                                    } catch (Exception j){
+                                        j.printStackTrace();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //update parse database
                         ParseUser.getCurrentUser().saveInBackground();
                         updateList();
 

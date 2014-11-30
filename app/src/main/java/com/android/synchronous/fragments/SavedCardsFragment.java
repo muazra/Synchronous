@@ -12,14 +12,12 @@ import android.widget.ListView;
 import com.android.synchronous.R;
 import com.android.synchronous.activities.CardActivity;
 import com.android.synchronous.adapters.SavedCardsListAdapter;
-import com.parse.GetCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SavedCardsFragment extends Fragment {
@@ -29,37 +27,32 @@ public class SavedCardsFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_savedcards, container, false);
 
-        JSONArray savedContacts = ParseUser.getCurrentUser().getJSONArray("saved");
-        final List<ParseUser> savedContactsList = new ArrayList<ParseUser>();
+        try{
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereContainedIn("username", Arrays.asList(ParseUser.getCurrentUser().getJSONArray("saved")));
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(final List<ParseUser> parseUsers, ParseException e) {
+                    SavedCardsListAdapter adapter = new SavedCardsListAdapter(getActivity(), parseUsers);
+                    ListView savedContactsListView = (ListView) root.findViewById(R.id.saved_list);
+                    savedContactsListView.setAdapter(adapter);
 
-        for (int i = 0; i < savedContacts.length(); i++) {
-            try {
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("name", savedContacts.get(i));
-                query.getFirstInBackground(new GetCallback<ParseUser>() {
-                    @Override
-                    public void done(ParseUser parseUser, ParseException e) {
-                        savedContactsList.add(parseUser);
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    savedContactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String username = parseUsers.get(position).getUsername();
+                            Intent intent = new Intent(getActivity(), CardActivity.class);
+                            intent.putExtra(CardActivity.CARD_USERNAME, username);
+                            intent.putExtra(CardActivity.CARD_POSITION, position);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        SavedCardsListAdapter adapter = new SavedCardsListAdapter(getActivity(), savedContactsList);
-        ListView savedContactsListView = (ListView) root.findViewById(R.id.saved_list);
-        savedContactsListView.setAdapter(adapter);
-
-        savedContactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String username = savedContactsList.get(position).getUsername();
-                Intent intent = new Intent(getActivity(), CardActivity.class);
-                intent.putExtra(CardActivity.CARD_USERNAME, username);
-                startActivity(intent);
-            }
-        });
 
         return root;
     }

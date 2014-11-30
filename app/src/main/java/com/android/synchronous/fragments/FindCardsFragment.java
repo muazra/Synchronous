@@ -34,7 +34,8 @@ public class FindCardsFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_findcards, container, false);
         mFindContactsListView = (ListView) root.findViewById(R.id.find_list);
 
-        JSONArray savedContactsList = ParseUser.getCurrentUser().getJSONArray("saved");
+        JSONArray savedContactsArray = ParseUser.getCurrentUser().getJSONArray("saved");
+        JSONArray requestsSentArray = ParseUser.getCurrentUser().getJSONArray("requests_sent");
 
         mFindContactsList = new ArrayList<ParseUser>();
         String userCity = ParseUser.getCurrentUser().getString("city");
@@ -42,7 +43,8 @@ public class FindCardsFragment extends Fragment {
         try {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
-            query.whereNotContainedIn("username", Arrays.asList(savedContactsList));
+            query.whereNotContainedIn("username", Arrays.asList(savedContactsArray));
+            query.whereNotContainedIn("username", Arrays.asList(requestsSentArray));
             query.whereEqualTo("city", userCity);
             query.whereEqualTo("discover", true);
             query.findInBackground(new FindCallback<ParseUser>() {
@@ -67,9 +69,14 @@ public class FindCardsFragment extends Fragment {
                 builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ParseUser userRequested = mFindContactsList.get(position);
-                        JSONArray array = userRequested.getJSONArray("requests");
-                        array.put(ParseUser.getCurrentUser().getUsername());
-                        userRequested.put("requests", array);
+                        JSONArray requestsArray = userRequested.getJSONArray("requests");
+                        requestsArray.put(ParseUser.getCurrentUser().getUsername());
+                        userRequested.put("requests", requestsArray);
+
+                        JSONArray sentArray = ParseUser.getCurrentUser().getJSONArray("requests_sent");
+                        sentArray.put(userRequested.getUsername());
+                        ParseUser.getCurrentUser().put("requests_sent", sentArray);
+
                         userRequested.saveInBackground();
 
                         mFindContactsList.remove(position);

@@ -1,9 +1,12 @@
 package com.android.synchronous.activities;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.android.synchronous.R;
 import com.android.synchronous.fragments.FindCardsFragment;
@@ -66,9 +71,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
         if(ParseUser.getCurrentUser().getJSONArray("pending").length() > 0) {
-            menu.findItem(R.id.action_pending).setIcon(R.drawable.requestspending_on);
+            menu.findItem(R.id.action_requests).setIcon(R.drawable.requestspending_on);
         } else {
-            menu.findItem(R.id.action_pending).setIcon(R.drawable.requestspending_off);
+            menu.findItem(R.id.action_requests).setIcon(R.drawable.requestspending_off);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -98,10 +103,41 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 Intent intent = new Intent(this, RequestsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
-
-            default:
                 return true;
+
+            case R.id.action_sendphone:
+                final EditText input = new EditText(MainActivity.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+                builder.setView(input);
+                builder.setTitle("Send Contact Info via SMS");
+                builder.setMessage("Enter Phone Number");
+
+                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String number = input.getText().toString().trim();
+                        String contact = "Name: " + ParseUser.getCurrentUser().get("name") +
+                                "\nPhone: " + ParseUser.getCurrentUser().get("phone") +
+                                "\nEmail: " + ParseUser.getCurrentUser().getEmail();
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
+                        intent.putExtra("sms_body", contact);
+                        startActivity(intent);
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.show();
         }
+        return true;
     }
 
     @Override
