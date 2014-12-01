@@ -13,6 +13,8 @@
     <string name="action_findcards">Find</string>
     <string name="action_savedcards">Saved </string>
     <string name="action_mycard">Mine</string>
+    <string name="new_account">New Account</string>
+    <string name="submit">Submit</string>
 
     <string name="quick_setup">Quick Setup</string>
     <string name="my_card">my card</string>
@@ -25,5 +27,25 @@
     <string name="location_disabled">Location Disabled</string>
     <string name="enable_location">Please enable location services</string>
     <string name="open_location_settings">Location Settings</string>
+
+    <string name="contact_card">Contact Card</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone #</string>
+    <string name="company">Company</string>
+    <string name="title">Title</string>
+
+    <string name="account_photo">Account Photo</string>
+    <string name="sign_in">Sign In</string>
+    <string name="fb_login">Log In with Facebook</string>
+
+    <string name="refresh">Refresh</string>
+    <string name="requests">Pending Requestsk</string>
+    <string name="discovery">Discovery</string>
+    <string name="sendSMS">Send Contact via SMS</string>
+
+    <string name="call">Call</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
 
 </resources>

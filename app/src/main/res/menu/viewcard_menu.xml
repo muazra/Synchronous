@@ -5,19 +5,19 @@
     <item android:id="@+id/action_call"
           android:icon="@drawable/ic_action_call"
           android:orderInCategory="2"
-          android:title="Call Contact"
+          android:title="@string/call"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_save"
           android:icon="@drawable/ic_action_save"
           android:orderInCategory="0"
-          android:title="Save Contact to Address Book"
+          android:title="@string/save"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_delete"
           android:icon="@drawable/ic_action_delete"
           android:orderInCategory="1"
-          android:title="Delete Contact"
+          android:title="@string/delete"
           android:showAsAction="ifRoom" />
 
 

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#2C51A2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/form"
+        android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="20sp"
+                android:textColor="#FFF"
+                android:text="New Account"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#000000"
+                />
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/username_new"
+                android:hint="@string/username"/>
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/password_new"
+                android:password="true"
+                android:hint="@string/password"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                android:textColor="#FFF"
+                android:text="@string/contact_card"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="#000000"
+                />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/name_new"
+                android:hint="@string/full_name"/>
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email_new"
+                android:hint="@string/email"/>
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:inputType="phone"
+                android:id="@+id/phone_new"
+                android:hint="@string/phone"/>
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/company_new"
+                android:hint="@string/company"/>
+
+            <EditText
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/title_new"
+                android:hint="@string/title"/>
+
+
+            <Button
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:padding="8dp"
+                android:id="@+id/upload_new"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:background="#093698"
+                android:layout_gravity="center"
+                android:text="@string/upload_photo"/>
+
+            <Button
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:padding="8dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/take_photo_new"
+                android:textSize="18sp"
+                android:background="#093698"
+                android:layout_gravity="center"
+                android:text="@string/take_photo"/>
+
+           <ImageView
+               android:layout_width="90dp"
+               android:layout_height="110dp"
+               android:layout_weight="1"
+               android:id="@+id/image_new"
+               android:layout_gravity="center"
+               android:padding="1dp"
+               android:contentDescription="@string/account_photo"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#093698"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:id="@+id/submit_new"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        />
+
+</RelativeLayout>

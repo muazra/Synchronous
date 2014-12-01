@@ -5,25 +5,25 @@
     <item android:id="@+id/action_refresh"
           android:icon="@drawable/ic_action_refresh"
           android:orderInCategory="0"
-          android:title="Refresh"
+          android:title="@string/refresh"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_requests"
           android:icon="@drawable/requestspending_off"
-          android:title="Pending Requests"
+          android:title="@string/requests"
           android:orderInCategory="1"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_discovery"
           android:icon="@drawable/ic_discovery_off"
           android:orderInCategory="2"
-          android:title="Discovery"
+          android:title="@string/discovery"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_sendphone"
           android:icon="@drawable/ic_action_phone"
           android:orderInCategory="3"
-          android:title="Send My Card via SMS"
+          android:title="@string/sendSMS"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_logout"

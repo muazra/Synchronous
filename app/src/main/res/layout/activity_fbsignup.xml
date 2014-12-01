@@ -20,7 +20,7 @@
             android:layout_marginTop="5dp"
             android:textSize="24sp"
             android:textColor="#FFF"
-            android:text="Contact Card"/>
+            android:text="@string/contact_card"/>
 
         <View
             android:layout_width="fill_parent"
@@ -46,23 +46,25 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:id="@+id/name_new"
-                    android:hint="Full Name"/>
+                    android:hint="@string/full_name"/>
 
                 <EditText
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
+                    android:inputType="textEmailAddress"
                     android:id="@+id/email_new"
-                    android:hint="Email"/>
+                    android:hint="@string/email"/>
 
                 <EditText
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
+                    android:inputType="phone"
                     android:id="@+id/phone_new"
-                    android:hint="Phone #"/>
+                    android:hint="@string/phone"/>
 
                 <EditText
                     android:layout_width="320dp"
@@ -70,7 +72,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:id="@+id/company_new"
-                    android:hint="Company"/>
+                    android:hint="@string/company"/>
 
                 <EditText
                     android:layout_width="320dp"
@@ -78,7 +80,7 @@
                     android:layout_gravity="center"
                     android:id="@+id/title_new"
                     android:layout_marginBottom="5dp"
-                    android:hint="Title"/>
+                    android:hint="@string/title"/>
 
             </LinearLayout>
 
@@ -137,7 +139,7 @@
             android:layout_marginStart="25dp"
             android:layout_gravity="center_vertical"
             android:padding="1dp"
-            android:contentDescription="Account Photo"
+            android:contentDescription="@string/account_photo"
             />
 
     </LinearLayout>
@@ -152,7 +154,7 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         />
 
 </RelativeLayout>
