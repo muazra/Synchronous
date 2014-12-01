@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.synchronous.R;
 import com.android.synchronous.task.CheckNetworkTask;
@@ -103,36 +104,45 @@ public class FacebookSignupActivity extends Activity {
             }
         });
 
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imageFile = new ParseFile("image.png", imageBytes);
-                imageFile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        mParseUser.setEmail(mEmail.getText().toString());
-                        mParseUser.put("name", mName.getText().toString());
-                        mParseUser.put("phone", mPhone.getText().toString());
-                        mParseUser.put("company", mCompany.getText().toString());
-                        mParseUser.put("title", mTitle.getText().toString());
-                        mParseUser.put("discover", false);
-                        mParseUser.put("city", "none");
-                        mParseUser.put("saved", new JSONArray());
-                        mParseUser.put("requests", new JSONArray());
-                        mParseUser.put("photo", imageFile);
-                        try {
-                            mParseUser.save();
-                        }catch (Exception j){
-                            j.printStackTrace();
+         if(mEmail.getText().toString().matches("") || mName.getText().toString().matches("") ||
+            mPhone.getText().toString().matches("") || mCompany.getText().toString().matches("") ||
+            mTitle.getText().toString().matches("")) {
+
+                Toast.makeText(mContext, "Please fill out all fields..", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            mSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    imageFile = new ParseFile("image.png", imageBytes);
+                    imageFile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            mParseUser.setEmail(mEmail.getText().toString());
+                            mParseUser.put("name", mName.getText().toString());
+                            mParseUser.put("phone", mPhone.getText().toString());
+                            mParseUser.put("company", mCompany.getText().toString());
+                            mParseUser.put("title", mTitle.getText().toString());
+                            mParseUser.put("discover", false);
+                            mParseUser.put("city", "none");
+                            mParseUser.put("saved", new JSONArray());
+                            mParseUser.put("requests", new JSONArray());
+                            mParseUser.put("photo", imageFile);
+                            try {
+                                mParseUser.save();
+                            } catch (Exception j) {
+                                j.printStackTrace();
+                            }
+                            Intent intent = new Intent(mContext, MainActivity.class);
+                            startActivity(intent);
+
                         }
-                        Intent intent = new Intent(mContext, MainActivity.class);
-                        startActivity(intent);
+                    });
 
-                    }
-                });
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

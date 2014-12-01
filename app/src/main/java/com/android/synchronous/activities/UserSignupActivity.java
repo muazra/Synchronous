@@ -114,43 +114,53 @@ public class UserSignupActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                mParseUser.setUsername(mUsername.getText().toString());
-                mParseUser.setPassword(mPassword.getText().toString());
-                mParseUser.setEmail(mEmail.getText().toString());
-                mParseUser.put("name", mName.getText().toString());
-                mParseUser.put("phone", mPhone.getText().toString());
-                mParseUser.put("company", mCompany.getText().toString());
-                mParseUser.put("title", mTitle.getText().toString());
-                mParseUser.put("discover", false);
-                mParseUser.put("city", "none");
-                mParseUser.put("saved", new JSONArray());
-                mParseUser.put("requests", new JSONArray());
+                if (mUsername.getText().toString().matches("") || mPassword.getText().toString().matches("") ||
+                        mEmail.getText().toString().matches("") || mName.getText().toString().matches("") ||
+                        mPhone.getText().toString().matches("") || mCompany.getText().toString().matches("") ||
+                        mTitle.getText().toString().matches("")) {
 
-                imageFile = new ParseFile("image.png", imageBytes);
-                imageFile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        mParseUser.put("photo", imageFile);
+                    Toast.makeText(mContext, "Please fill out all fields..", Toast.LENGTH_LONG).show();
 
-                        mParseUser.signUpInBackground(new SignUpCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if(e == null){
-                                    Intent intent = new Intent(mContext, UserLoginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    Toast.makeText(mContext, "Signup successful. Welcome!",
-                                            Toast.LENGTH_LONG).show();
-                                } else {
-                                    e.printStackTrace();
-                                    Toast.makeText(mContext, "Signup unsuccessful. Please try again.",
-                                            Toast.LENGTH_LONG).show();
+                } else {
+
+                    mParseUser.setUsername(mUsername.getText().toString());
+                    mParseUser.setPassword(mPassword.getText().toString());
+                    mParseUser.setEmail(mEmail.getText().toString());
+                    mParseUser.put("name", mName.getText().toString());
+                    mParseUser.put("phone", mPhone.getText().toString());
+                    mParseUser.put("company", mCompany.getText().toString());
+                    mParseUser.put("title", mTitle.getText().toString());
+                    mParseUser.put("discover", false);
+                    mParseUser.put("city", "none");
+                    mParseUser.put("saved", new JSONArray());
+                    mParseUser.put("requests", new JSONArray());
+
+                    imageFile = new ParseFile("image.png", imageBytes);
+                    imageFile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            mParseUser.put("photo", imageFile);
+
+                            mParseUser.signUpInBackground(new SignUpCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Intent intent = new Intent(mContext, UserLoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        Toast.makeText(mContext, "Signup successful. Welcome!",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
+                                        e.printStackTrace();
+                                        Toast.makeText(mContext, "Signup unsuccessful. Please try again.",
+                                                Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+                }
             }
         });
     }
