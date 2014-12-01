@@ -5,7 +5,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.android.synchronous.R;
+import com.android.synchronous.activities.MainActivity;
 import com.android.synchronous.util.GeocodeUtil;
 import com.android.synchronous.util.LocationEnabledUtil;
 import com.parse.ParseUser;
@@ -14,7 +18,7 @@ import java.util.Locale;
 
 public class SetUserLocationTask {
 
-    public static void setLocation(final Context mContext){
+    public static void setLocation(final Context mContext, final MenuItem item){
 
         LocationManager mlocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         LocationEnabledUtil.checkLocationEnabled(mlocationManager, mContext);
@@ -26,7 +30,13 @@ public class SetUserLocationTask {
                 ParseUser.getCurrentUser().put("city", geocode.find(location).get(0).getLocality());
                 ParseUser.getCurrentUser().put("discover", true);
 
-                ParseUser.getCurrentUser().saveInBackground();
+                try {
+                    ParseUser.getCurrentUser().save();
+                    item.setIcon(R.drawable.ic_discovery_on);
+                    Toast.makeText(MainActivity.mContext, "Sharing enabled", Toast.LENGTH_LONG).show();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override

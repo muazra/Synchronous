@@ -33,11 +33,11 @@ public class UserLoginActivity extends Activity {
         Parse.initialize(this, "TmZHxDzLuiQBpzODDec0zDix04RCF2fSdzLSnBLB", "5Aedz07mBLrFQuVT6Gj7OVh2dVqEPD35531pTBPk");
         ParseFacebookUtils.initialize("569756256459862");
 
-//        if(ParseUser.getCurrentUser() != null) {
-//            Intent intent = new Intent(mContext, MainActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            startActivity(intent);
-//        }
+        if(ParseUser.getCurrentUser() != null) {
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }
 
         mUsername = (TextView) findViewById(R.id.username_login);
         mPassword = (TextView) findViewById(R.id.password_login);

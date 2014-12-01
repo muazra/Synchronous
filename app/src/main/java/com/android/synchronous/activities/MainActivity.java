@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     private ViewPager mViewPager;
     private MenuItem mRefreshIcon;
+    private ActionBar.Tab mTab;
     public static Context mContext;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -86,21 +89,24 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
-                //mViewPager.setAdapter(mAppSectionsPagerAdapter);
+                mViewPager.setAdapter(mAppSectionsPagerAdapter);
+                mViewPager.setCurrentItem(mTab.getPosition());
                 mRefreshIcon.setActionView(null);
                 return true;
 
             case R.id.action_discovery:
                 if(ParseUser.getCurrentUser().getBoolean("discover")) {
-                    item.setIcon(R.drawable.ic_discovery_off);
                     ParseUser.getCurrentUser().put("discover", false);
-                    ParseUser.getCurrentUser().saveInBackground();
-                    Toast.makeText(this, "Sharing Disabled", Toast.LENGTH_SHORT).show();
+                    try {
+                        ParseUser.getCurrentUser().save();
+                        item.setIcon(R.drawable.ic_discovery_off);
+                        Toast.makeText(mContext, "Sharing Disabled", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 } else {
-                    item.setIcon(R.drawable.ic_discovery_on);
-                    SetUserLocationTask.setLocation(mContext);
-                    Toast.makeText(this, "Sharing Enabled", Toast.LENGTH_SHORT).show();
+                    SetUserLocationTask.setLocation(mContext, item);
                 }
                 return true;
 
@@ -111,10 +117,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 return true;
 
             case R.id.action_sendphone:
+                Log.d("Muaz", "HI");
                 final EditText input = new EditText(MainActivity.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
@@ -125,12 +132,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String number = input.getText().toString().trim();
-                        String contact = "Name: " + ParseUser.getCurrentUser().get("name") +
-                                "\nPhone: " + ParseUser.getCurrentUser().get("phone") +
-                                "\nEmail: " + ParseUser.getCurrentUser().getEmail();
+                        String contact = ("Name: " + ParseUser.getCurrentUser().get("name") +
+                                "\n" + "Phone: " + ParseUser.getCurrentUser().get("phone") +
+                                "\n" + "Email: " + ParseUser.getCurrentUser().getEmail());
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + number));
-                        intent.putExtra("sms_body", contact);
+                        intent.putExtra("sms_body", Html.fromHtml(contact).toString());
                         startActivity(intent);
 
                     }
@@ -141,6 +148,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                 });
                 builder.show();
+                return true;
+
+            case R.id.action_logout:
+                ParseUser.getCurrentUser().put("discover", false);
+                try {
+                    ParseUser.getCurrentUser().save();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                ParseUser.logOut();
+                System.exit(0);
+                return true;
         }
         return true;
     }
@@ -151,6 +170,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mTab = tab;
         mViewPager.setCurrentItem(tab.getPosition());
     }
 

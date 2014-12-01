@@ -3,6 +3,7 @@ package com.android.synchronous.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,11 +31,23 @@ public class SavedCardsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_savedcards, container, false);
+        View root = inflater.inflate(R.layout.fragment_savedcards, container, false);
+
+        Log.d("MUAZ", "saved_cards fragment onCreateView");
+        JSONArray savedContactsArray = ParseUser.getCurrentUser().getJSONArray("saved");
+        String[] savedStringArray = new String[savedContactsArray.length()];
+        for(int i = 0; i < savedContactsArray.length(); i++){
+            try{
+                savedStringArray[i] = savedContactsArray.get(i).toString();
+                Log.d("MUAZ", "savedStringArray = >> " + savedStringArray[i]);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         try{
             ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereContainedIn("username", Arrays.asList(ParseUser.getCurrentUser().getJSONArray("saved")));
+            query.whereContainedIn("username", Arrays.asList(savedStringArray));
             query.findInBackground(new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> parseUsers, ParseException e) {
@@ -56,9 +71,9 @@ public class SavedCardsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        String username = mSavedList.get(position).getUsername();
-        Intent intent = new Intent(getActivity(), CardActivity.class);
-        intent.putExtra(CardActivity.CARD_USERNAME, username);
+        Intent intent = new Intent(MainActivity.mContext, CardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(CardActivity.CARD_USERNAME, mSavedList.get(position).getUsername());
         intent.putExtra(CardActivity.CARD_POSITION, position);
         startActivity(intent);
     }

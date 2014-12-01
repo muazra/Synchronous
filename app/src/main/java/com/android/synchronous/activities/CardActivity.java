@@ -1,20 +1,18 @@
 package com.android.synchronous.activities;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Intents;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.Data;
 
 import com.android.synchronous.R;
-import com.android.synchronous.task.JSONArrayRemoveTask;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -23,6 +21,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+
+import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,61 +46,78 @@ public class CardActivity extends Activity {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 mParseUser = parseUser;
+
+                ParseFile imageFile = (ParseFile) mParseUser.get("photo");
+                imageFile.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] bytes, ParseException e) {
+                        CircleImageView mImage = (CircleImageView) findViewById(R.id.cardImage);
+                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0,
+                                bytes.length);
+                        mImage.setImageBitmap(imageBitmap);
+                    }
+                });
+
+                TextView mName = (TextView) findViewById(R.id.cardName);
+                mName.setText(mParseUser.get("name").toString());
+
+                TextView mEmail = (TextView) findViewById(R.id.cardEmail);
+                mEmail.setText(mParseUser.getEmail());
+
+                TextView mNumber = (TextView) findViewById(R.id.cardNumber);
+                mNumber.setText(mParseUser.get("phone").toString());
+
+                TextView mCompany = (TextView) findViewById(R.id.cardCompany);
+                mCompany.setText(mParseUser.get("company").toString());
+
+                TextView mTitle = (TextView) findViewById(R.id.cardTitle);
+                mTitle.setText(mParseUser.get("title").toString());
             }
         });
-
-        ParseFile imageFile = (ParseFile) mParseUser.get("photo");
-        imageFile.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
-                CircleImageView mImage = (CircleImageView) findViewById(R.id.cardImage);
-                Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0,
-                        bytes.length);
-                mImage.setImageBitmap(imageBitmap);
-            }
-        });
-
-        TextView mName = (TextView) findViewById(R.id.cardName);
-        mName.setText(mParseUser.get("name").toString());
-
-        TextView mEmail = (TextView) findViewById(R.id.cardEmail);
-        mEmail.setText(mParseUser.getEmail());
-
-        TextView mNumber = (TextView) findViewById(R.id.cardNumber);
-        mNumber.setText(mParseUser.get("phone").toString());
-
-        TextView mCompany = (TextView) findViewById(R.id.cardCompany);
-        mCompany.setText(mParseUser.get("company").toString());
-
-        TextView mTitle = (TextView) findViewById(R.id.cardTitle);
-        mTitle.setText(mParseUser.get("title").toString());
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_delete:
-                JSONArray savedList = JSONArrayRemoveTask.remove(getIntent().
-                        getIntExtra(CARD_POSITION, 0), ParseUser.getCurrentUser().
-                        getJSONArray("saved"));
 
-                ParseUser.getCurrentUser().put("saved", savedList);
-                ParseUser.getCurrentUser().saveInBackground();
+                JSONArray savedList = ParseUser.getCurrentUser().getJSONArray("saved");
+                String[] savedListStringArray = new String[savedList.length()];
+                for(int i = 0; i < savedList.length(); i++){
+                    try{
+                        if(i != getIntent().getIntExtra(CARD_POSITION, 0))
+                            savedListStringArray[i] = savedList.get(i).toString();
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                Intent intent = new Intent(this, MainActivity.class);
+                ParseUser.getCurrentUser().put("saved", Arrays.asList(savedListStringArray));
+                try {
+                    ParseUser.getCurrentUser().save();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 return true;
 
             case R.id.action_save:
-                ContentValues values = new ContentValues();
-                values.put(Data.RAW_CONTACT_ID, 001);
-                values.put(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-                values.put(Phone.NUMBER, mParseUser.get("phone").toString());
-                values.put(Phone.TYPE, Phone.TYPE_MAIN);
-                values.put(Phone.LABEL, mParseUser.get("name").toString());
-                getContentResolver().insert(android.provider.ContactsContract.Data.CONTENT_URI, values);
+                intent = new Intent(Intents.Insert.ACTION);
+                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                intent.putExtra(Intents.Insert.EMAIL, mParseUser.getEmail())
+                        .putExtra(Intents.Insert.PHONE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN)
+                        .putExtra(Intents.Insert.PHONE_TYPE, mParseUser.get("title").toString())
+                        .putExtra(Intents.Insert.NAME, mParseUser.get("name").toString())
+                        .putExtra(Intents.Insert.COMPANY, mParseUser.get("company").toString())
+                        .putExtra(Intents.Insert.JOB_TITLE, mParseUser.get("title").toString())
+                        .putExtra(Intents.Insert.POSTAL, mParseUser.get("city").toString());
+                startActivity(intent);
                 return true;
 
             case R.id.action_call:

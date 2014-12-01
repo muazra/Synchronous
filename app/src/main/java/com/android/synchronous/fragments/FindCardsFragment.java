@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.android.synchronous.R;
 import com.android.synchronous.activities.MainActivity;
 import com.android.synchronous.adapters.FindCardsListAdapter;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -21,6 +24,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class FindCardsFragment extends ListFragment {
@@ -30,23 +34,42 @@ public class FindCardsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_findcards, container, false);
-        return rootView;
-    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+        Log.d("MUAZ", "findcardsfragment onCreateView()");
 
         JSONArray savedContactsArray = ParseUser.getCurrentUser().getJSONArray("saved");
-        JSONArray requestsSentArray = ParseUser.getCurrentUser().getJSONArray("requests_sent");
+        String[] savedStringArray = new String[savedContactsArray.length()];
+        for(int i = 0; i < savedContactsArray.length(); i++){
+            try{
+                savedStringArray[i] = savedContactsArray.get(i).toString();
+                Log.d("MUAZ", "savedStringArray = >> " + savedStringArray[i]);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONArray requestsArray = ParseUser.getCurrentUser().getJSONArray("requests");
+        String[] requestsStringArray = new String[requestsArray.length()];
+        for(int i = 0; i < requestsArray.length(); i++){
+            try{
+                requestsStringArray[i] = requestsArray.get(i).toString();
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
-            query.whereNotContainedIn("username", Arrays.asList(savedContactsArray));
-            query.whereNotContainedIn("username", Arrays.asList(requestsSentArray));
             query.whereEqualTo("city", ParseUser.getCurrentUser().getString("city"));
             query.whereEqualTo("discover", true);
+
+            if(savedStringArray.length > 0)
+                query.whereNotContainedIn("username", Arrays.asList(savedStringArray));
+
+            if(requestsStringArray.length > 0)
+                query.whereNotContainedIn("username", Arrays.asList(requestsStringArray));
+
             query.findInBackground(new FindCallback<ParseUser>() {
                 @Override
                 public void done(List<ParseUser> parseUsers, ParseException e) {
@@ -60,6 +83,7 @@ public class FindCardsFragment extends ListFragment {
             e.printStackTrace();
         }
 
+        return rootView;
     }
 
     private void updateList(){
@@ -75,17 +99,22 @@ public class FindCardsFragment extends ListFragment {
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 ParseUser userRequested = mFindList.get(position);
-                JSONArray requestsArray = userRequested.getJSONArray("requests");
-                requestsArray.put(ParseUser.getCurrentUser().getUsername());
-                userRequested.put("requests", requestsArray);
 
-                JSONArray sentArray = ParseUser.getCurrentUser().getJSONArray("requests_sent");
-                sentArray.put(userRequested.getUsername());
-                ParseUser.getCurrentUser().put("requests_sent", sentArray);
+                HashMap<String, Object> params = new HashMap<String, Object>();
+                params.put("userId", userRequested.getObjectId());
+                params.put("sendFrom", ParseUser.getCurrentUser().getUsername());
+                ParseCloud.callFunctionInBackground("sendRequest", params, new FunctionCallback<ParseUser>() {
+                    public void done(ParseUser user, ParseException e) {
+                        if (e == null) {
+                            Log.d("MUAZ", "findcardsfragment sendRequest worked !!");
+                        }else{
+                            Log.d("MUAZ", "findcardsfragment sendRequest DID NOT WORK :/ !!");
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
-                userRequested.saveInBackground();
                 mFindList.remove(position);
-
                 updateList();
             }
         });
