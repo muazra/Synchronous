@@ -151,6 +151,7 @@ public class UserSignupActivity extends Activity {
                                         startActivity(intent);
                                         Toast.makeText(mContext, "Signup successful. Welcome!",
                                                 Toast.LENGTH_LONG).show();
+                                        finish();
                                     } else {
                                         e.printStackTrace();
                                         Toast.makeText(mContext, "Signup unsuccessful. Please try again.",

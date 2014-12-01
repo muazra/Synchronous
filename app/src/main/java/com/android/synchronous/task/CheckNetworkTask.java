@@ -8,7 +8,7 @@ import com.android.synchronous.util.NetworkUtil;
 
 public class CheckNetworkTask {
 
-    public static void check(Context context){
+    public static void check(final Context context){
         if(!NetworkUtil.isOnline(context)){
             AlertDialog.Builder builder = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
             builder.setTitle("Internet Disabled");
@@ -16,7 +16,6 @@ public class CheckNetworkTask {
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    System.exit(0);
                 }
             });
             builder.show();

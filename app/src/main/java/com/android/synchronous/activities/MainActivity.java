@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -90,6 +91,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 item.setActionView(R.layout.progress_loading);
@@ -116,7 +118,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 return true;
 
             case R.id.action_requests:
-                Intent intent = new Intent(this, RequestsActivity.class);
+                intent = new Intent(this, RequestsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 return true;
@@ -124,6 +126,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.action_sendphone:
                 Log.d("Muaz", "HI");
                 final EditText input = new EditText(MainActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_PHONE);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
@@ -158,14 +161,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.action_logout:
                 ParseUser.getCurrentUser().put("discover", false);
                 ParseUser.getCurrentUser().saveInBackground();
-                ParseUser.logOut();
+
                 com.facebook.Session fbs = com.facebook.Session.getActiveSession();
                 if (fbs == null) {
                     fbs = new com.facebook.Session(mContext);
                     com.facebook.Session.setActiveSession(fbs);
                 }
                 fbs.closeAndClearTokenInformation();
-                System.exit(0);
+
+                ParseUser.logOut();
+
+                intent = new Intent(mContext, UserLoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
                 return true;
         }
         return true;

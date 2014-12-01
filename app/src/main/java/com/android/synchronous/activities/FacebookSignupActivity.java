@@ -104,21 +104,22 @@ public class FacebookSignupActivity extends Activity {
             }
         });
 
-         if(mEmail.getText().toString().matches("") || mName.getText().toString().matches("") ||
-            mPhone.getText().toString().matches("") || mCompany.getText().toString().matches("") ||
-            mTitle.getText().toString().matches("")) {
+        mSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageFile = new ParseFile("image.png", imageBytes);
+                imageFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
 
-                Toast.makeText(mContext, "Please fill out all fields..", Toast.LENGTH_LONG).show();
+                        if(mEmail.getText().toString().matches("") || mName.getText().toString().matches("") ||
+                                mPhone.getText().toString().matches("") || mCompany.getText().toString().matches("") ||
+                                mTitle.getText().toString().matches("")) {
 
-        } else {
+                            Toast.makeText(mContext, "Please fill out all fields..", Toast.LENGTH_LONG).show();
 
-            mSubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    imageFile = new ParseFile("image.png", imageBytes);
-                    imageFile.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
+                        } else {
+
                             mParseUser.setEmail(mEmail.getText().toString());
                             mParseUser.put("name", mName.getText().toString());
                             mParseUser.put("phone", mPhone.getText().toString());
@@ -136,13 +137,14 @@ public class FacebookSignupActivity extends Activity {
                             }
                             Intent intent = new Intent(mContext, MainActivity.class);
                             startActivity(intent);
-
+                            finish();
                         }
-                    });
 
-                }
-            });
-        }
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

@@ -8,59 +8,56 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_margin="30dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="230dp"
         android:id="@+id/cardImage"
         android:layout_weight="0.2"
         app:border_width="2dp"
         app:border_color="#FF000000"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="1.5">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardImage"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:id="@+id/cardName"
             android:textSize="26sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:layout_below="@id/cardName"
+            android:layout_gravity="center"
             android:id="@+id/cardTitle"
             android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:layout_below="@id/cardTitle"
+            android:layout_gravity="center"
             android:id="@+id/cardNumber"
             android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/cardNumber"
             android:id="@+id/cardEmail"
+            android:layout_gravity="center"
             android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/cardEmail"
             android:id="@+id/cardCompany"
+            android:layout_gravity="center"
             android:textSize="20sp"/>
 
         </LinearLayout>

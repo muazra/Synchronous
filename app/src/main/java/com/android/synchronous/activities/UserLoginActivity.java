@@ -41,6 +41,7 @@ public class UserLoginActivity extends Activity {
             Intent intent = new Intent(mContext, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finish();
         }
 
         mUsername = (TextView) findViewById(R.id.username_login);
@@ -66,6 +67,7 @@ public class UserLoginActivity extends Activity {
                         if (parseUser != null) {
                             Intent intent = new Intent(mContext, MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(mContext, "Login unsuccessful. Check credentials.",
                                     Toast.LENGTH_LONG).show();
@@ -90,10 +92,12 @@ public class UserLoginActivity extends Activity {
                             Intent intent = new Intent(mContext, FacebookSignupActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
+                            finish();
                         } else {
                             Intent intent = new Intent(mContext, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 });

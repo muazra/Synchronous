@@ -47,7 +47,7 @@
 
     <Button
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@id/password_login"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal|center_vertical"
@@ -59,7 +59,7 @@
 
     <Button
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@id/button_login"
         android:layout_marginTop="10dp"
         android:background="#093698"
