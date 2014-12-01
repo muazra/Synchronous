@@ -40,6 +40,11 @@
                   android:windowSoftInputMode="adjustPan"
                   android:parentActivityName=".activities.UserLoginActivity"/>
 
+        <activity android:name=".activities.FacebookSignupActivity"
+                  android:label="@string/quick_setup"
+                  android:windowSoftInputMode="adjustPan"
+                  android:parentActivityName=".activities.UserLoginActivity"/>
+
         <activity android:name=".activities.CardActivity"
                   android:label="View Card"
                   android:parentActivityName=".activities.MainActivity"/>

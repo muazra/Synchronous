@@ -77,6 +77,9 @@ public class UserLoginActivity extends Activity {
         mFBLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FacebookSignupActivity.class);
+                startActivity(intent);
+
                 ParseFacebookUtils.logIn(UserLoginActivity.this, new LogInCallback() {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {

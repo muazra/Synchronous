@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#2C51A2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/form"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textSize="24sp"
+            android:textColor="#FFF"
+            android:text="Contact Card"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#000000"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/name_new"
+                    android:hint="Full Name"/>
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/email_new"
+                    android:hint="Email"/>
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/phone_new"
+                    android:hint="Phone #"/>
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/company_new"
+                    android:hint="Company"/>
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/title_new"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Title"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal"
+        android:layout_above="@+id/submit_new"
+        android:layout_below="@id/form">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:padding="8dp"
+                android:id="@+id/upload_new"
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                android:background="#093698"
+                android:layout_gravity="center|"
+                android:text="@string/upload_photo"
+                />
+
+            <Button
+                android:layout_width="140dp"
+                android:layout_height="45dp"
+                android:padding="8dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/take_photo_new"
+                android:textSize="18sp"
+                android:background="#093698"
+                android:layout_gravity="center"
+                android:text="@string/take_photo"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_weight="1"
+            android:id="@+id/image_new"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_gravity="center_vertical"
+            android:padding="1dp"
+            android:contentDescription="Account Photo"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#093698"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:id="@+id/submit_new"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Sign in via Facebook"
+        />
+
+</RelativeLayout>

@@ -137,7 +137,7 @@ public class UserSignupActivity extends Activity {
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
-                                    Toast.makeText(mContext, "Signup successful. Please login above.",
+                                    Toast.makeText(mContext, "Signup successful. Welcome!",
                                             Toast.LENGTH_LONG).show();
                                 } else {
                                     e.printStackTrace();
