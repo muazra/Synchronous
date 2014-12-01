@@ -155,6 +155,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 ParseUser.getCurrentUser().put("discover", false);
                 ParseUser.getCurrentUser().saveInBackground();
                 ParseUser.logOut();
+                com.facebook.Session fbs = com.facebook.Session.getActiveSession();
+                if (fbs == null) {
+                    fbs = new com.facebook.Session(mContext);
+                    com.facebook.Session.setActiveSession(fbs);
+                }
+                fbs.closeAndClearTokenInformation();
                 System.exit(0);
                 return true;
         }

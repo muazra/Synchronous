@@ -63,7 +63,7 @@
         android:layout_below="@id/button_login"
         android:layout_marginTop="10dp"
         android:background="#093698"
-        android:text="Sign Up with Facebook"
+        android:text="Log In with Facebook"
         android:textColor="#FFFFFF"
         android:id="@+id/button_fb_login"
         android:layout_centerHorizontal="true"/>

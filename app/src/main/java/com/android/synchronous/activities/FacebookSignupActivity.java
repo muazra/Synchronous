@@ -13,17 +13,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.synchronous.R;
-import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -55,10 +51,14 @@ public class FacebookSignupActivity extends Activity {
     private byte[] imageBytes;
     private ParseFile imageFile;
 
+    private ParseUser mParseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usersignup);
+        setContentView(R.layout.activity_fbsignup);
+
+        mParseUser = ParseUser.getCurrentUser();
 
         mName = (TextView) findViewById(R.id.name_new);
         mEmail = (TextView) findViewById(R.id.email_new);
@@ -107,39 +107,23 @@ public class FacebookSignupActivity extends Activity {
                 imageFile.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        ParseFacebookUtils.logIn(FacebookSignupActivity.this, new LogInCallback() {
-                            @Override
-                            public void done(ParseUser parseUser, ParseException e) {
-                                if (parseUser == null) {
-                                    Toast.makeText(mContext, "Facebook Login unsuccessful.", Toast.LENGTH_SHORT).show();
-
-                                } else if (parseUser.isNew()) {
-                                    parseUser.setEmail(mEmail.getText().toString());
-                                    parseUser.put("name", mName.getText().toString());
-                                    parseUser.put("phone", mPhone.getText().toString());
-                                    parseUser.put("company", mCompany.getText().toString());
-                                    parseUser.put("title", mTitle.getText().toString());
-                                    parseUser.put("discover", false);
-                                    parseUser.put("city", "none");
-                                    parseUser.put("saved", new JSONArray());
-                                    parseUser.put("requests", new JSONArray());
-                                    parseUser.put("photo", imageFile);
-                                    parseUser.put("photo", imageFile);
-
-                                    parseUser.saveInBackground();
-
-                                    Intent intent = new Intent(mContext, MainActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(mContext, "Welcome to Synchronous!", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    Intent intent = new Intent(mContext, MainActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(mContext, "Welcome Back!", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        });
+                        mParseUser.setEmail(mEmail.getText().toString());
+                        mParseUser.put("name", mName.getText().toString());
+                        mParseUser.put("phone", mPhone.getText().toString());
+                        mParseUser.put("company", mCompany.getText().toString());
+                        mParseUser.put("title", mTitle.getText().toString());
+                        mParseUser.put("discover", false);
+                        mParseUser.put("city", "none");
+                        mParseUser.put("saved", new JSONArray());
+                        mParseUser.put("requests", new JSONArray());
+                        mParseUser.put("photo", imageFile);
+                        try {
+                            mParseUser.save();
+                        }catch (Exception j){
+                            j.printStackTrace();
+                        }
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        startActivity(intent);
 
                     }
                 });
@@ -229,12 +213,6 @@ public class FacebookSignupActivity extends Activity {
             err.printStackTrace();
         }
         return bitmap;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        return true;
     }
 
 }

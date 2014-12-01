@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ public class UserLoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         Parse.initialize(this, "TmZHxDzLuiQBpzODDec0zDix04RCF2fSdzLSnBLB", "5Aedz07mBLrFQuVT6Gj7OVh2dVqEPD35531pTBPk");
-        ParseFacebookUtils.initialize("569756256459862");
+        ParseFacebookUtils.initialize("1006777119362651");
 
         if(ParseUser.getCurrentUser() != null) {
             Intent intent = new Intent(mContext, MainActivity.class);
@@ -77,25 +78,19 @@ public class UserLoginActivity extends Activity {
         mFBLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FacebookSignupActivity.class);
-                startActivity(intent);
-
                 ParseFacebookUtils.logIn(UserLoginActivity.this, new LogInCallback() {
                     @Override
-                    public void done(ParseUser parseUser, ParseException e) {
-                        if (parseUser == null) {
-                            Toast.makeText(mContext, "Facebook Login unsuccessful.", Toast.LENGTH_SHORT).show();
-
-                        } else if (parseUser.isNew()) {
-                            Intent intent = new Intent(mContext, MainActivity.class);
+                    public void done(ParseUser user, ParseException err) {
+                        if (user == null) {
+                            Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                        } else if (user.isNew()) {
+                            Intent intent = new Intent(mContext, FacebookSignupActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
-                            Toast.makeText(mContext, "Welcome to Synchronous!", Toast.LENGTH_SHORT).show();
-
                         } else {
                             Intent intent = new Intent(mContext, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
-                            Toast.makeText(mContext, "Welcome Back!", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });
