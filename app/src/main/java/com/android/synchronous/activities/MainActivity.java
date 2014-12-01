@@ -106,6 +106,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
                     return true;
                 } else {
+                    Toast.makeText(mContext, "Gathering Location and Enabling Sharing..", Toast.LENGTH_SHORT).show();
                     SetUserLocationTask.setLocation(mContext, item);
                 }
                 return true;
@@ -152,11 +153,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             case R.id.action_logout:
                 ParseUser.getCurrentUser().put("discover", false);
-                try {
-                    ParseUser.getCurrentUser().save();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+                ParseUser.getCurrentUser().saveInBackground();
                 ParseUser.logOut();
                 System.exit(0);
                 return true;

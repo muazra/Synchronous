@@ -23,7 +23,7 @@
     <item android:id="@+id/action_sendphone"
           android:icon="@drawable/ic_action_phone"
           android:orderInCategory="3"
-          android:title="Send to Phone"
+          android:title="Send My Card via SMS"
           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_logout"

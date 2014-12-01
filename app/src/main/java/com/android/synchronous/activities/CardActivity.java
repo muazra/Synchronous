@@ -11,6 +11,7 @@ import android.provider.ContactsContract.Intents;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.synchronous.R;
 import com.parse.GetCallback;
@@ -21,8 +22,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
-
-import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -82,24 +81,19 @@ public class CardActivity extends Activity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.action_delete:
-
+                Toast.makeText(MainActivity.mContext, "Deleting Contact..", Toast.LENGTH_SHORT).show();
                 JSONArray savedList = ParseUser.getCurrentUser().getJSONArray("saved");
-                String[] savedListStringArray = new String[savedList.length()];
+                JSONArray updatedSavedList = new JSONArray();
                 for(int i = 0; i < savedList.length(); i++){
                     try{
                         if(i != getIntent().getIntExtra(CARD_POSITION, 0))
-                            savedListStringArray[i] = savedList.get(i).toString();
+                            updatedSavedList.put(savedList.get(i));
                     }catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-                ParseUser.getCurrentUser().put("saved", Arrays.asList(savedListStringArray));
-                try {
-                    ParseUser.getCurrentUser().save();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                ParseUser.getCurrentUser().put("saved", updatedSavedList);
+                ParseUser.getCurrentUser().saveInBackground();
 
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -108,6 +102,7 @@ public class CardActivity extends Activity {
                 return true;
 
             case R.id.action_save:
+                Toast.makeText(MainActivity.mContext, "Saving Contact to Address Book..", Toast.LENGTH_SHORT).show();
                 intent = new Intent(Intents.Insert.ACTION);
                 intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                 intent.putExtra(Intents.Insert.EMAIL, mParseUser.getEmail())
@@ -115,17 +110,25 @@ public class CardActivity extends Activity {
                         .putExtra(Intents.Insert.PHONE_TYPE, mParseUser.get("title").toString())
                         .putExtra(Intents.Insert.NAME, mParseUser.get("name").toString())
                         .putExtra(Intents.Insert.COMPANY, mParseUser.get("company").toString())
-                        .putExtra(Intents.Insert.JOB_TITLE, mParseUser.get("title").toString())
-                        .putExtra(Intents.Insert.POSTAL, mParseUser.get("city").toString());
+                        .putExtra(Intents.Insert.JOB_TITLE, mParseUser.get("title").toString());
+
                 startActivity(intent);
                 return true;
 
             case R.id.action_call:
+                Toast.makeText(MainActivity.mContext, "Calling Contact..", Toast.LENGTH_SHORT).show();
+
                 String number = "tel:" + mParseUser.get("phone").toString().trim();
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(number));
                 startActivity(callIntent);
                 return true;
+
+            case android.R.id.home:
+                intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
 
         }
 

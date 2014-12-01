@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class MyCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_mycard, container, false);
         ParseUser currentUser = ParseUser.getCurrentUser();
+
+        Log.d("MUAZ", "my_cards fragment onCreateView");
 
         ParseFile imageFile = (ParseFile) currentUser.get("photo");
         imageFile.getDataInBackground(new GetDataCallback() {
