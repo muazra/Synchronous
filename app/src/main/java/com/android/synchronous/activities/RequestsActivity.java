@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 
 import com.android.synchronous.R;
 import com.android.synchronous.adapters.RequestsActivityListAdapter;
+import com.android.synchronous.task.CheckNetworkTask;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,6 +32,8 @@ public class RequestsActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
+
+        CheckNetworkTask.check(this);
 
         updateList();
 

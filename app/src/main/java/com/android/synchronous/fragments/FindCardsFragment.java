@@ -35,14 +35,11 @@ public class FindCardsFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_findcards, container, false);
 
-        Log.d("MUAZ", "findcardsfragment onCreateView()");
-
         JSONArray savedContactsArray = ParseUser.getCurrentUser().getJSONArray("saved");
         String[] savedStringArray = new String[savedContactsArray.length()];
         for(int i = 0; i < savedContactsArray.length(); i++){
             try{
                 savedStringArray[i] = savedContactsArray.get(i).toString();
-                Log.d("MUAZ", "savedStringArray = >> " + savedStringArray[i]);
             }catch (Exception e) {
                 e.printStackTrace();
             }

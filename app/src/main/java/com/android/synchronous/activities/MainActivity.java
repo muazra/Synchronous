@@ -26,6 +26,7 @@ import com.android.synchronous.R;
 import com.android.synchronous.fragments.FindCardsFragment;
 import com.android.synchronous.fragments.MyCardFragment;
 import com.android.synchronous.fragments.SavedCardsFragment;
+import com.android.synchronous.task.CheckNetworkTask;
 import com.android.synchronous.task.SetUserLocationTask;
 import com.parse.ParseUser;
 
@@ -40,6 +41,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CheckNetworkTask.check(this);
+
         mContext = this;
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
@@ -188,6 +192,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public Fragment getItem(int i) {
+            CheckNetworkTask.check(mContext);
             switch (i) {
                 case 0:
                     return new MyCardFragment();

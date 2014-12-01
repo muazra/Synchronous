@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.synchronous.R;
+import com.android.synchronous.task.CheckNetworkTask;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -57,6 +58,8 @@ public class FacebookSignupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fbsignup);
+
+        CheckNetworkTask.check(this);
 
         mParseUser = ParseUser.getCurrentUser();
 

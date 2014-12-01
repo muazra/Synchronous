@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.synchronous.R;
+import com.android.synchronous.task.CheckNetworkTask;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -38,6 +39,8 @@ public class CardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
+
+        CheckNetworkTask.check(this);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", getIntent().getStringExtra(CARD_USERNAME));
